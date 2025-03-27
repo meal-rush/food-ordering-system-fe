@@ -10,6 +10,10 @@ const HomePage = () => {
       </header>
       <section className="home-content">
         <button className="order-now-btn">Order Now</button>
+        <div className="auth-buttons">
+          <button className="sign-up-btn">Sign Up</button>
+          <button className="sign-in-btn">Sign In</button>
+        </div>
       </section>
       <section className="featured-meals">
         <h2>Featured Meals</h2>

@@ -81,3 +81,30 @@
     font-size: 0.9rem;
     border-radius: 8px;
 }
+
+.auth-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.sign-up-btn,
+.sign-in-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sign-up-btn:hover {
+    background-color: #0056b3;
+}
+
+.sign-in-btn:hover {
+    background-color: #0056b3;
+}
