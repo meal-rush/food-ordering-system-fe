@@ -23,6 +23,11 @@ import swal from "sweetalert";
 // Action to create an order
 export const createOrderAction = (customer, total) => async (dispatch, getState) => {
 	try {
+		if (total === 0) {
+			console.error("Validation Error: Total amount cannot be zero.");
+			throw new Error("Total amount cannot be zero.");
+		}
+
 		dispatch({
 			type: CREATE_ORDER_REQUEST,
 		});
