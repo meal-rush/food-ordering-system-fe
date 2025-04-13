@@ -138,7 +138,7 @@ export default function CartView() {
 											}}
 											onClick={() => decreaseQuanity(cart._id, cart.quantity)}
 										>
-											<i class="fa-solid fa-circle-minus"></i>
+											<i className="fa-solid fa-circle-minus"></i> {/* Changed class to className */}
 										</Button>
 										&emsp;
 										{cart.quantity}
@@ -152,7 +152,7 @@ export default function CartView() {
 											}}
 											onClick={() => increaseQuanity(cart._id, cart.quantity)}
 										>
-											<i class="fa-solid fa-circle-plus"></i>
+											<i className="fa-solid fa-circle-plus"></i> {/* Changed class to className */}
 										</Button>
 									</td>
 									<td>
@@ -166,7 +166,7 @@ export default function CartView() {
 											onClick={() => deleteHandler(cart._id)}
 										>
 											<i
-												class="fa-solid fa-trash"
+												className="fa-solid fa-trash" 
 												onClick={() => deleteHandler(cart._id)}
 												style={{ cursor: "pointer" }}
 											></i>
