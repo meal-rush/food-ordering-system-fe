@@ -16,7 +16,7 @@ function Header({ setSearch }) {
 	const { customerInfo } = customer_Login;
 
 	return (
-		<div className="Navbar">
+		<div className="Navbar" style={{ backgroundColor: "white" }}>
 			<div className="leftSide">
 				<img style={{ height: "160px", width: "300px" }} src={image1} alt="" />
 			</div>

@@ -5,7 +5,7 @@ import { Row } from "react-bootstrap";
 
 const Footer = () => {
 	return (
-		<div className="main-footer">
+		<div className="main-footer" style={{ backgroundColor: "white" }}>
 			<div className="container">
 				<div className="row">
 					{/* Column1 */}
@@ -54,9 +54,7 @@ const Footer = () => {
 				</div>
 				<hr />
 				<div className="row">
-					<p className="col-sm">
-						&copy;{new Date().getFullYear()} site by DreamSeers | Hela Ayu | All rights reserved |
-					</p>
+					<p className="col-sm">&copy;{new Date().getFullYear()} Meal Rush | All rights reserved |</p>
 				</div>
 			</div>
 		</div>
