@@ -53,8 +53,8 @@ const Footer = () => {
 					</div>
 				</div>
 				<hr />
-				<div className="row">
-					<p className="col-sm">&copy;{new Date().getFullYear()} Meal Rush | All rights reserved |</p>
+				<div className="row text-center">
+					<p className="col-sm">&copy;{new Date().getFullYear()} | Meal Rush | All rights reserved </p>
 				</div>
 			</div>
 		</div>

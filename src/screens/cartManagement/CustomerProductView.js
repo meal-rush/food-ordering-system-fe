@@ -44,9 +44,9 @@ const CustomerProductView = () => {
 		<div style={{ minHeight: 700 }}>
 			<header className="masthead">
 				<div className="container">
-					<div className="masthead-subheading">Welcome To Meal Rush!</div>
-					<div className="masthead-heading text-uppercase">It's Nice To Meet You</div>
-					<Link to="/">
+					{/* <div className="masthead-subheading">Welcome To Meal Rush!</div>
+					<div className="masthead-heading text-uppercase">It's Nice To Meet You</div> */}
+					{/* <Link to="/">
 						<Button
 							variant="success"
 							size="lg"
@@ -60,7 +60,7 @@ const CustomerProductView = () => {
 						>
 							Tell Me More
 						</Button>
-					</Link>
+					</Link> */}
 				</div>
 			</header>
 			<br></br>
