@@ -44,7 +44,7 @@ const CustomerProductView = () => {
 		<div style={{ minHeight: 700 }}>
 			<header className="masthead">
 				<div className="container">
-					<div className="masthead-subheading">Welcome To Hela Ayu!</div>
+					<div className="masthead-subheading">Welcome To Meal Rush!</div>
 					<div className="masthead-heading text-uppercase">It's Nice To Meet You</div>
 					<Link to="/">
 						<Button
@@ -219,20 +219,20 @@ const CustomerProductView = () => {
 			<section className="page-section " id="product">
 				<div className="container">
 					<div className="text-center">
-						<h2 className="section-heading text-uppercase">Our Products</h2>
-						<h3 className="section-subheading text-muted">High quality products with low minimal prices.</h3>
+						<h2 className="section-heading text-uppercase">Our Meals</h2>
+						<h3 className="section-subheading text-muted">High quality foods with minimal prices.</h3>
 					</div>
 					<div className="row">
 						<div className="col-lg-4 col-sm-6 mb-4">
 							<div className="product-item">
 								<img
 									className="img-fluid"
-									src="https://i.pinimg.com/originals/d3/41/05/d34105976d81728a9b0d960971691fca.jpg"
+									src="https://i.ibb.co/mrvcpVbN/food-on-a-plate-taken-through-top-view-and-white-b-5.png"
 									alt="..."
 									style={{ height: "200px" }}
 								/>
 								<div className="product-caption">
-									<div className="product-caption-heading">Beauty Care</div>
+									<div className="product-caption-heading">Tropical Zen Bowl</div>
 								</div>
 							</div>
 						</div>
@@ -240,12 +240,12 @@ const CustomerProductView = () => {
 							<div className="product-item">
 								<img
 									className="img-fluid"
-									src="https://img.freepik.com/free-photo/homeopathy-herbal-extracts-small-bottles_73944-9299.jpg?size=626&ext=jpg"
+									src="https://i.ibb.co/6RNxrB8M/2.png"
 									alt="..."
 									style={{ height: "200px" }}
 								/>
 								<div className="product-caption">
-									<div className="product-caption-heading">Homeopathy</div>
+									<div className="product-caption-heading">Sunset Chicken Delight</div>
 								</div>
 							</div>
 						</div>
@@ -253,12 +253,12 @@ const CustomerProductView = () => {
 							<div className="product-item">
 								<img
 									className="img-fluid"
-									src="http://internationalworldofbusiness.com/wp-content/uploads/2019/07/2-696x381.jpg"
+									src="https://i.ibb.co/vvVpMLGW/3.png"
 									alt="..."
 									style={{ height: "200px" }}
 								/>
 								<div className="product-caption">
-									<div className="product-caption-heading">Sports</div>
+									<div className="product-caption-heading">Crispy Cutlet Fiesta</div>
 								</div>
 							</div>
 						</div>
@@ -266,13 +266,13 @@ const CustomerProductView = () => {
 							<div className="product-item">
 								<img
 									className="img-fluid"
-									src="https://bwellpharmacy.com/wp-content/uploads/Products-Baby.jpg"
+									src="https://i.ibb.co/8DSVS8Bg/4.png"
 									alt="..."
 									style={{ height: "200px" }}
 								/>
 
 								<div className="product-caption">
-									<div className="product-caption-heading">Baby & Kids</div>
+									<div className="product-caption-heading">Garden Gourmet Stack</div>
 								</div>
 							</div>
 						</div>
@@ -281,16 +281,16 @@ const CustomerProductView = () => {
 							<div className="product-item">
 								<img
 									className="img-fluid"
-									src="https://ww1.prweb.com/prfiles/2014/09/11/12163870/Pharma+Packaging+Solutions+Products.png"
+									src="https://i.ibb.co/PzbZbyvJ/5.png"
 									alt="..."
 									style={{ height: "200px" }}
 								/>
 								<div className="product-caption">
-									<div className="product-caption-heading">Grocery</div>
+									<div className="product-caption-heading">Golden Morning Platter</div>
 								</div>
 							</div>
 						</div>
-						<div className="col-lg-4 col-sm-6">
+						{/* <div className="col-lg-4 col-sm-6">
 							<div className="product-item">
 								<img
 									className="img-fluid"
@@ -302,7 +302,7 @@ const CustomerProductView = () => {
 									<div className="product-caption-heading">Pet</div>
 								</div>
 							</div>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</section>

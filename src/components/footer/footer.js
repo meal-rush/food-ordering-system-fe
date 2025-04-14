@@ -43,10 +43,10 @@ const Footer = () => {
 							<div className="col" style={{ marginTop: "5%" }}>
 								<h4>CONTACT</h4>
 								<ul className="list-unstyled">
-									<li>ADDRESS : Hela Ayu Corporation, Galle Road, Colombo</li>
+									<li>ADDRESS : Meal Rush Corporation, Galle Road, Colombo</li>
 									<br></br>
 									<li>PHONE : 077 7785441</li>
-									<li>EMAIL : hela-ayu@gmail.com</li>
+									<li>EMAIL : meal-rush@gmail.com</li>
 								</ul>
 							</div>
 						</Row>

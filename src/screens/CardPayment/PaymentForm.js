@@ -112,7 +112,7 @@ export default function PaymentForm() {
 	return (
 		<>
 			<div className="payContainer">
-				<h3>Hela Ayu Payment Process</h3>
+				<h3>Meal Rush Payment Process</h3>
 				<hr />
 				<label>Total from the cart : Rs. {eval(localStorage.getItem("total"))}</label> <br />
 				<label>Delivery Cost - Rs.300 </label> <br />
