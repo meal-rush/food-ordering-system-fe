@@ -52,6 +52,11 @@ export default function PaymentForm() {
 
 		if (!error) {
 			try {
+				console.log("PaymentMethod created:", paymentMethod); // Log the paymentMethod object
+				if (!paymentMethod || !paymentMethod.id) {
+					throw new Error("Invalid or undefined PaymentMethod ID");
+				}
+
 				const { id } = paymentMethod;
 				const data = {
 					amount: Number(localStorage.getItem("total")) + 100 + 300,
@@ -73,19 +78,24 @@ export default function PaymentForm() {
 					});
 				}
 			} catch (error) {
-				console.log("Error", error);
+				console.error("Payment processing error:", error); // Log the error details
 				Swal.fire({
 					icon: "error",
 					title: "Payment Failed",
-					text: "Please Check The Payment Details",
+					text: error.response?.data?.message || "Please Check The Payment Details",
 				});
 			}
 		} else {
-			console.log(error.message);
+			console.error("Error creating PaymentMethod:", error.message); // Log the error message
+			Swal.fire({
+				icon: "error",
+				title: "Payment Failed",
+				text: error.message,
+			});
 		}
 
 		emailjs
-			.sendForm("service_a0dl37h", "template_cbmdmwl", formPay.current, "-l-yfdg2kBiYgzEht")
+			.sendForm("service_chqhmre", "template_vokeufx", formPay.current, "LclqEw7ekzkAyRcv8")
 			.then((result) => {
 				console.log(result.text);
 				setisSend(true);
