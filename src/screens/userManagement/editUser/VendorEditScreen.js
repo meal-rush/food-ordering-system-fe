@@ -1,6 +1,16 @@
-import { useState, useEffect } from "react";
-import { Form, Button, Row, Col, Card } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Form, Button, Row, Col, Card, Container, Nav } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import {
+	FaUser,
+	FaStore,
+	FaEdit,
+	FaArrowLeft,
+	FaTrash,
+	FaUpload,
+	FaExclamationTriangle,
+	FaUtensils,
+} from "react-icons/fa";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import MainScreen from "../../../components/MainScreen";
@@ -8,7 +18,9 @@ import { vendorUpdateProfile, vendorDeleteProfile } from "../../../actions/userM
 import swal from "sweetalert";
 import "./EditScreen.css";
 
-const VendorEditScreen = () => {
+const VendorEditScreen = ({ history }) => {
+	// All the existing state variables remain the same
+	const [activeTab, setActiveTab] = useState("personal");
 	const [name, setName] = useState("");
 	const [telephone, setTelephone] = useState("");
 	const [homeAddress, setHomeAddress] = useState("");
@@ -21,8 +33,13 @@ const VendorEditScreen = () => {
 	const [businessRegNumber, setBusinessRegNumber] = useState("");
 	const [description, setDescription] = useState("");
 	const [confirmpassword, setConfirmPassword] = useState("");
+	const [cuisineType, setCuisineType] = useState("");
+	const [openingTime, setOpeningTime] = useState("");
+	const [closingTime, setClosingTime] = useState("");
+	const [availabilityStatus, setAvailabilityStatus] = useState(true);
 	const [message, setMessage] = useState(null);
 	const [picMessage, setPicMessage] = useState(null);
+	const [picLoading, setPicLoading] = useState(false);
 
 	const dispatch = useDispatch();
 
@@ -35,29 +52,60 @@ const VendorEditScreen = () => {
 	const vendorDelete = useSelector((state) => state.vendorDelete);
 	const { loading: loadingDelete, error: errorDelete, success: successDelete } = vendorDelete;
 
-	useEffect(() => {
-		setName(vendorInfo.name);
-		setTelephone(vendorInfo.telephone);
-		setHomeAddress(vendorInfo.homeAddress);
-		setEmail(vendorInfo.email);
-		setBusinessName(vendorInfo.businessName);
-		setBusinessAddress(vendorInfo.businessAddress);
-		setWebsite(vendorInfo.website);
-		setBusinessRegNumber(vendorInfo.businessRegNumber);
-		setDescription(vendorInfo.description);
-		setPic(vendorInfo.pic);
-	}, [vendorInfo, vendorDelete, successDelete, loadingDelete, errorDelete]);
+	// Cuisine type options
+	const cuisineOptions = [
+		"Italian",
+		"Chinese",
+		"Indian",
+		"Japanese",
+		"Mexican",
+		"Thai",
+		"French",
+		"American",
+		"Mediterranean",
+		"Greek",
+		"Korean",
+		"Vietnamese",
+		"Middle Eastern",
+		"Spanish",
+		"Other",
+	];
 
+	useEffect(() => {
+		if (!vendorInfo) {
+			history.push("/");
+		} else {
+			setName(vendorInfo.name);
+			setTelephone(vendorInfo.telephone);
+			setHomeAddress(vendorInfo.homeAddress);
+			setEmail(vendorInfo.email);
+			setBusinessName(vendorInfo.businessName);
+			setBusinessAddress(vendorInfo.businessAddress);
+			setWebsite(vendorInfo.website || "");
+			setBusinessRegNumber(vendorInfo.businessRegNumber);
+			setDescription(vendorInfo.description || "");
+			setPic(vendorInfo.pic || "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg");
+			setCuisineType(vendorInfo.cuisineType || "");
+			setOpeningTime(vendorInfo.openingTime || "");
+			setClosingTime(vendorInfo.closingTime || "");
+			setAvailabilityStatus(vendorInfo.availabilityStatus !== undefined ? vendorInfo.availabilityStatus : true);
+		}
+	}, [vendorInfo, history, vendorDelete, successDelete, loadingDelete, errorDelete]);
+
+	// All the existing handlers remain the same
 	const postDetails = (pics) => {
-		if (pics === "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg") {
-			return setPicMessage("Please Select an Image");
+		if (!pics) {
+			return setPicMessage("Please select an image");
 		}
 		setPicMessage(null);
+		setPicLoading(true);
+
 		if (pics.type === "image/jpeg" || pics.type === "image/png" || pics.type === "image/jpg") {
 			const data = new FormData();
 			data.append("file", pics);
 			data.append("upload_preset", "vendorProfile");
 			data.append("cloud_name", "dfmnpw0yp");
+
 			fetch("https://api.cloudinary.com/v1_1/dfmnpw0yp/image/upload", {
 				method: "post",
 				body: data,
@@ -65,53 +113,83 @@ const VendorEditScreen = () => {
 				.then((res) => res.json())
 				.then((data) => {
 					setPic(data.url.toString());
+					setPicLoading(false);
 				})
 				.catch((err) => {
 					console.log(err);
+					setPicLoading(false);
+					setPicMessage("Image upload failed. Please try again.");
 				});
 		} else {
-			return setPicMessage("Please Select an Image");
+			setPicLoading(false);
+			return setPicMessage("Please select a JPEG, JPG or PNG image");
 		}
 	};
 
-	const submitHandler = async (e) => {
+	const submitHandler = (e) => {
 		e.preventDefault();
 
-		if (password !== confirmpassword) {
+		if (password && password !== confirmpassword) {
 			setMessage("Passwords do not match");
-		} else {
-			const vendorUpdatedInfo = {
-				name,
-				telephone,
-				homeAddress,
-				email,
-				password,
-				businessName,
-				businessAddress,
-				website,
-				businessRegNumber,
-				description,
-				pic,
-			};
-			dispatch(vendorUpdateProfile(vendorUpdatedInfo));
+			return;
 		}
+
+		const vendorUpdatedInfo = {
+			name,
+			telephone,
+			homeAddress,
+			email,
+			password,
+			businessName,
+			businessAddress,
+			website,
+			businessRegNumber,
+			description,
+			pic,
+			cuisineType,
+			openingTime,
+			closingTime,
+			availabilityStatus,
+		};
+
+		dispatch(vendorUpdateProfile(vendorUpdatedInfo));
+
+		swal({
+			title: "Profile Updated!",
+			text: "Your profile has been updated successfully",
+			icon: "success",
+			timer: 2000,
+			button: false,
+		});
 	};
 
-	const deleteHandler = (vendorInfo) => {
+	const deleteHandler = () => {
 		swal({
 			title: "Are you sure?",
-			text: "Once deleted, you will not be able to recover these details!",
+			text: "Once deleted, you will not be able to recover your account!",
 			icon: "warning",
-			buttons: true,
+			buttons: {
+				cancel: {
+					text: "Cancel",
+					value: false,
+					visible: true,
+					className: "swal-button--cancel",
+				},
+				confirm: {
+					text: "Yes, delete my account",
+					value: true,
+					visible: true,
+					className: "swal-button--danger",
+				},
+			},
 			dangerMode: true,
 		})
 			.then((willDelete) => {
 				if (willDelete) {
 					dispatch(vendorDeleteProfile(vendorInfo));
-
 					swal({
-						title: "Success!",
-						text: "Deleted Account Successfully",
+						title: "Account Deleted",
+						text: "Your account has been permanently deleted",
 						icon: "success",
 						timer: 2000,
 						button: false,
@@ -121,240 +199,354 @@ const VendorEditScreen = () => {
 			.catch((err) => {
 				swal({
 					title: "Error!",
-					text: "Couldn't Delete Account",
-					type: "error",
+					text: "Couldn't delete account. Please try again.",
+					icon: "error",
 				});
 			});
 	};
 
-	if (vendorInfo) {
-		return (
-			<div className="editBg">
-				<MainScreen title="EDIT - VENDOR">
-					<Button
-						variant="success"
-						style={{
-							float: "left",
-							marginTop: 5,
-							fontSize: 15,
-						}}
-						href="/vendor"
-					>
-						{" "}
-						Back to Dashboard
-					</Button>
-					<br></br>
-					<br></br>
-					<br></br>
-					<Card
-						className="profileCont"
-						style={{
-							borderRadius: 45,
-							borderWidth: 2.0,
-							marginTop: 20,
-							paddingInline: 10,
-							paddingLeft: 25,
-							paddingRight: 25,
-							background: "rgba(231, 238, 238, 0.8)",
-						}}
-					>
-						<div className="loginContainer">
-							<br></br>
-							<div>
-								{error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-								{message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
-								{loading && <Loading />}
-							</div>
-							<br></br>
-							<Row className="VendorProfileContainer">
-								<Col md={6}>
-									<Form onSubmit={submitHandler}>
-										<Form.Group controlId="vendorViewName">
-											<Form.Label>Name</Form.Label>
-											<Form.Control
-												type="text"
-												value={name}
-												onChange={(e) => setName(e.target.value)}
-												required
-											></Form.Control>
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="vendorFormBasicTelephone">
-											<Form.Label>Telephone</Form.Label>
-											<Form.Control
-												type="text"
-												value={telephone}
-												onChange={(e) => setTelephone(e.target.value)}
-												required
-											/>
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="vendorFormBasicAddress">
-											<Form.Label>Home Address</Form.Label>
-											<Form.Control
-												type="textArea"
-												value={homeAddress}
-												onChange={(e) => setHomeAddress(e.target.value)}
-												required
-											/>
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="vendorFormBasicEmail">
-											<Form.Label>Email</Form.Label>
-											<Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="formBasicPassword">
-											<Form.Label>Password</Form.Label>
-											<Form.Control
-												type="password"
-												value={password}
-												placeholder="Password"
-												onChange={(e) => setPassword(e.target.value)}
-											/>
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="confirmPassword">
-											<Form.Label>Confirm Password</Form.Label>
-											<Form.Control
-												type="password"
-												value={confirmpassword}
-												placeholder="Confirm Password"
-												onChange={(e) => setConfirmPassword(e.target.value)}
-											/>
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="vendorFormBasicBusinessName">
-											<Form.Label>Business Name</Form.Label>
-											<Form.Control
-												type="text"
-												value={businessName}
-												placeholder="Enter Business Name"
-												onChange={(e) => setBusinessName(e.target.value)}
-												required
-											/>
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="vendorFormBasicBusinessAddress">
-											<Form.Label>Business Address</Form.Label>
-											<Form.Control
-												type="textArea"
-												value={businessAddress}
-												placeholder="Enter Business Address"
-												onChange={(e) => setBusinessAddress(e.target.value)}
-												required
-											/>
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="vendorFormBasicWebsite">
-											<Form.Label>Website</Form.Label>
-											<Form.Control
-												type="text"
-												value={website}
-												placeholder="Enter Website"
-												onChange={(e) => setWebsite(e.target.value)}
-												required
-											/>
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="vendorFormBasicBusinessRegNo">
-											<Form.Label>Business Registration Number</Form.Label>
-											<Form.Control
-												type="text"
-												value={businessRegNumber}
-												placeholder="Enter Business Registration Number"
-												onChange={(e) => setBusinessRegNumber(e.target.value)}
-												required
-											/>
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="vendorFormBasicDescription">
-											<Form.Label>Description</Form.Label>
-											<textarea
-												style={{
-													width: "100%",
-													fontSize: "16px",
-													borderRadius: "5px",
-												}}
-												value={description}
-												onChange={(e) => setDescription(e.target.value)}
-												required
-												rows={7}
-											/>
-										</Form.Group>
-										<br></br>
-										{picMessage && <ErrorMessage variant="danger">{picMessage}</ErrorMessage>}
-										<Form.Group controlId="pic">
-											<Form.Label>Profile Picture</Form.Label>
-											&emsp;
-											<input
-												type="file"
-												accept="image/*"
-												id="vendor-pic"
-												onChange={(e) => postDetails(e.target.files[0])}
-											/>
-										</Form.Group>
-										<br></br>
-										<Button
-											variant="primary"
-											type="submit"
-											style={{
-												fontSize: 15,
-												marginTop: 10,
-											}}
-										>
-											Update
-										</Button>
-										&emsp;
-										<Button
-											variant="danger"
-											onClick={deleteHandler}
-											style={{
-												fontSize: 15,
-												marginTop: 10,
-											}}
-										>
-											Delete
-										</Button>
-									</Form>
-								</Col>
-								<Col
-									style={{
-										display: "flex",
-										alignItems: "center",
-										justifyContent: "center",
-									}}
-								>
-									<img
-										src={pic}
-										alt={name}
-										className="profilePic"
-										style={{
-											boxShadow: "7px 7px 20px ",
-											borderColor: "black",
-											borderRadius: 250,
-											background: "white",
-											width: "300px",
-											height: "300px",
-										}}
-									/>
-								</Col>
-							</Row>
-							<br></br>
-						</div>
-					</Card>
-					<br></br>
-				</MainScreen>
-			</div>
-		);
-	} else {
+	// Handler for toggling availability status
+	const toggleAvailabilityStatus = () => {
+		setAvailabilityStatus(!availabilityStatus);
+	};
+
+	if (!vendorInfo) {
 		return (
 			<div className="denied">
 				<MainScreen />
-				<br></br>
+				<br />
 			</div>
 		);
 	}
+
+	return (
+		<div className="editProfileBg">
+			<MainScreen title="">
+				<Container className="py-4">
+					{/* Header with navigation buttons */}
+					<div className="d-flex justify-content-between align-items-center mb-4">
+						<Button variant="outline-primary" className="back-btn" href="/vendor-view">
+							<FaArrowLeft /> Back to Profile Page
+						</Button>
+						<h2 className="profile-title mb-0">Edit Restaurant Profile</h2>
+						<div className="invisible" style={{ width: "100px" }}></div> {/* For alignment */}
+					</div>
+
+					<Card className="profile-card">
+						<Card.Body>
+							{/* Alerts section */}
+							{error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+							{errorDelete && <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>}
+							{message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
+							{loading && <Loading />}
+							{loadingDelete && <Loading />}
+
+							<Row>
+								{/* Profile Picture Column */}
+								<Col lg={4} className="text-center profile-image-section mb-4 mb-lg-0">
+									<div className="profile-image-container edit-profile-image">
+										{picLoading ? <Loading /> : <img src={pic} alt={name} className="profile-image" />}
+										<div className="image-upload-overlay">
+											<label htmlFor="file-input" className="upload-icon-wrapper">
+												<FaUpload className="upload-icon" />
+											</label>
+											<input
+												id="file-input"
+												type="file"
+												accept="image/*"
+												onChange={(e) => postDetails(e.target.files[0])}
+												style={{ display: "none" }}
+											/>
+										</div>
+									</div>
+									{picMessage && <div className="text-danger mt-2">{picMessage}</div>}
+
+									<h3 className="restaurant-name mt-4">{businessName || "Your Restaurant"}</h3>
+									<p className="text-muted vendor-name">Managed by {name}</p>
+
+									<div className="mt-5 danger-zone">
+										<h5 className="danger-zone-title">
+											<FaExclamationTriangle /> Danger Zone
+										</h5>
+										<p className="text-muted small">This action cannot be undone</p>
+										<Button variant="danger" onClick={deleteHandler} className="delete-account-btn">
+											<FaTrash /> Delete Account
+										</Button>
+									</div>
+								</Col>
+
+								{/* Edit Form Column */}
+								<Col lg={8}>
+									{/* Tabs Navigation */}
+									<Nav variant="tabs" className="profile-tabs mb-4">
+										<Nav.Item>
+											<Nav.Link
+												className={activeTab === "personal" ? "active" : ""}
+												onClick={() => setActiveTab("personal")}
+											>
+												<FaUser /> Personal Information
+											</Nav.Link>
+										</Nav.Item>
+										<Nav.Item>
+											<Nav.Link
+												className={activeTab === "business" ? "active" : ""}
+												onClick={() => setActiveTab("business")}
+											>
+												<FaStore /> Business Information
+											</Nav.Link>
+										</Nav.Item>
+										<Nav.Item>
+											<Nav.Link
+												className={activeTab === "restaurant" ? "active" : ""}
+												onClick={() => setActiveTab("restaurant")}
+											>
+												<FaUtensils /> Restaurant Details
+											</Nav.Link>
+										</Nav.Item>
+									</Nav>
+
+									<Form onSubmit={submitHandler}>
+										{/* Personal Information Tab */}
+										{activeTab === "personal" && (
+											<div className="edit-form-section">
+												<Row>
+													<Col md={6}>
+														<Form.Group className="mb-3">
+															<Form.Label>Full Name</Form.Label>
+															<Form.Control
+																type="text"
+																value={name}
+																onChange={(e) => setName(e.target.value)}
+																placeholder="Enter your full name"
+																required
+															/>
+														</Form.Group>
+													</Col>
+													<Col md={6}>
+														<Form.Group className="mb-3">
+															<Form.Label>Phone Number</Form.Label>
+															<Form.Control
+																type="tel"
+																value={telephone}
+																onChange={(e) => setTelephone(e.target.value)}
+																placeholder="Enter your phone number"
+																required
+															/>
+														</Form.Group>
+													</Col>
+												</Row>
+
+												<Form.Group className="mb-3">
+													<Form.Label>Email Address</Form.Label>
+													<Form.Control
+														type="email"
+														value={email}
+														onChange={(e) => setEmail(e.target.value)}
+														placeholder="Enter your email address"
+														required
+													/>
+												</Form.Group>
+
+												<Form.Group className="mb-3">
+													<Form.Label>Home Address</Form.Label>
+													<Form.Control
+														as="textarea"
+														rows={2}
+														value={homeAddress}
+														onChange={(e) => setHomeAddress(e.target.value)}
+														placeholder="Enter your home address"
+														required
+													/>
+												</Form.Group>
+
+												<hr className="my-4" />
+												<h5 className="section-subtitle mb-3">Change Password</h5>
+												<p className="text-muted small mb-3">Leave blank if you don't want to change your password</p>
+
+												<Row>
+													<Col md={6}>
+														<Form.Group className="mb-3">
+															<Form.Label>New Password</Form.Label>
+															<Form.Control
+																type="password"
+																value={password}
+																onChange={(e) => setPassword(e.target.value)}
+																placeholder="Enter new password"
+															/>
+														</Form.Group>
+													</Col>
+													<Col md={6}>
+														<Form.Group className="mb-3">
+															<Form.Label>Confirm New Password</Form.Label>
+															<Form.Control
+																type="password"
+																value={confirmpassword}
+																onChange={(e) => setConfirmPassword(e.target.value)}
+																placeholder="Confirm new password"
+															/>
+														</Form.Group>
+													</Col>
+												</Row>
+											</div>
+										)}
+
+										{/* Business Information Tab */}
+										{activeTab === "business" && (
+											<div className="edit-form-section">
+												<Row>
+													<Col md={6}>
+														<Form.Group className="mb-3">
+															<Form.Label>Business Name</Form.Label>
+															<Form.Control
+																type="text"
+																value={businessName}
+																onChange={(e) => setBusinessName(e.target.value)}
+																placeholder="Enter business name"
+																required
+															/>
+														</Form.Group>
+													</Col>
+													<Col md={6}>
+														<Form.Group className="mb-3">
+															<Form.Label>Registration Number</Form.Label>
+															<Form.Control
+																type="text"
+																value={businessRegNumber}
+																onChange={(e) => setBusinessRegNumber(e.target.value)}
+																placeholder="Enter business registration number"
+																required
+															/>
+														</Form.Group>
+													</Col>
+												</Row>
+
+												<Form.Group className="mb-3">
+													<Form.Label>Business Address</Form.Label>
+													<Form.Control
+														as="textarea"
+														rows={2}
+														value={businessAddress}
+														onChange={(e) => setBusinessAddress(e.target.value)}
+														placeholder="Enter business address"
+														required
+													/>
+												</Form.Group>
+
+												<Form.Group className="mb-3">
+													<Form.Label>Website</Form.Label>
+													<Form.Control
+														type="url"
+														value={website}
+														onChange={(e) => setWebsite(e.target.value)}
+														placeholder="https://yourwebsite.com"
+													/>
+												</Form.Group>
+
+												<Form.Group className="mb-3">
+													<Form.Label>Restaurant Description</Form.Label>
+													<Form.Control
+														as="textarea"
+														rows={5}
+														value={description}
+														onChange={(e) => setDescription(e.target.value)}
+														placeholder="Describe your restaurant, cuisine types, specialties, etc."
+													/>
+												</Form.Group>
+											</div>
+										)}
+
+										{/* Restaurant Details Tab - UPDATED with new toggle button */}
+										{activeTab === "restaurant" && (
+											<div className="edit-form-section">
+												<h5 className="section-subtitle mb-3">Restaurant Operation Details</h5>
+
+												<Form.Group className="mb-4">
+													<Form.Label>Cuisine Type</Form.Label>
+													<Form.Control
+														as="select"
+														value={cuisineType}
+														onChange={(e) => setCuisineType(e.target.value)}
+														required
+													>
+														<option value="">Select Cuisine Type</option>
+														{cuisineOptions.map((cuisine, index) => (
+															<option key={index} value={cuisine}>
+																{cuisine}
+															</option>
+														))}
+													</Form.Control>
+												</Form.Group>
+
+												<Row className="mb-4">
+													<Col md={12} className="mb-3">
+														<h6>Working Hours</h6>
+													</Col>
+													<Col md={6}>
+														<Form.Group>
+															<Form.Label>Opening Time</Form.Label>
+															<Form.Control
+																type="time"
+																value={openingTime}
+																onChange={(e) => setOpeningTime(e.target.value)}
+																required
+															/>
+														</Form.Group>
+													</Col>
+													<Col md={6}>
+														<Form.Group>
+															<Form.Label>Closing Time</Form.Label>
+															<Form.Control
+																type="time"
+																value={closingTime}
+																onChange={(e) => setClosingTime(e.target.value)}
+																required
+															/>
+														</Form.Group>
+													</Col>
+												</Row>
+
+												{/* UPDATED: Enhanced Toggle Switch for Restaurant Availability */}
+												<Form.Group className="mb-4">
+													<Form.Label>Restaurant Availability Status</Form.Label>
+													<div className="status-toggle-container">
+														<div className="toggle-switch-container">
+															<div
+																className={`toggle-switch ${availabilityStatus ? "active" : ""}`}
+																onClick={toggleAvailabilityStatus}
+															>
+																<div className="toggle-knob"></div>
+															</div>
+															<span className={`toggle-label ${availabilityStatus ? "text-success" : "text-danger"}`}>
+																{availabilityStatus ? "Open for Orders" : "Closed"}
+															</span>
+														</div>
+														<small className="text-muted d-block mt-2">
+															{availabilityStatus
+																? "Your restaurant is currently visible to customers and accepting orders."
+																: "Your restaurant is currently not visible to customers and not accepting orders."}
+														</small>
+													</div>
+												</Form.Group>
+											</div>
+										)}
+
+										<div className="d-flex justify-content-end mt-4">
+											<Button variant="secondary" className="me-2" onClick={() => history.push("/vendor-view")}>
+												Cancel
+											</Button>
+											<Button variant="success" type="submit" disabled={loading}>
+												{loading ? "Updating..." : "Save Changes"}
+											</Button>
+										</div>
+									</Form>
+								</Col>
+							</Row>
+						</Card.Body>
+					</Card>
+				</Container>
+			</MainScreen>
+		</div>
+	);
 };
 
 export default VendorEditScreen;
