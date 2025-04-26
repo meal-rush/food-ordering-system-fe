@@ -60,8 +60,10 @@ export default function AdminUpdateOrder({ match, history }) {
 							borderWidth: 0,
 							outline: "none",
 							marginLeft: 150,
-							background: "black",
+							background: "rgba(28, 96, 15, 0.1)",
 							borderRadius: 0,
+							borderRadius: "15px",
+							boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
 						}}
 					>
 						<Card.Body>
@@ -71,28 +73,64 @@ export default function AdminUpdateOrder({ match, history }) {
 								<Form.Group controlId="reply">
 									<Form.Label
 										style={{
-											fontSize: 20,
-											color: "white",
+											fontSize: "1.25rem",
+											color: "black",
+											fontWeight: "bold",
+											marginBottom: "0.5rem",
 										}}
 									>
 										Status
 									</Form.Label>
-									<br></br>
-									<br></br>
 
-									<select
-										style={{ height: "35px", width: "100%", borderRadius: 5, borderColor: "#808080", borderWidth: 0.5 }}
-										onChange={(e) => setStatus(e.target.value)}
-									>
-										<option value="pending">Pending</option>
-										<option value="confirm">Confirm</option>
-									</select>
+									<div style={{ position: "relative" }}>
+										<select
+											style={{
+												height: "40px",
+												width: "100%",
+												borderRadius: "8px",
+												border: "1px solid #ccc",
+												padding: "0 40px 0 12px",
+												fontSize: "1rem",
+												color: "#333",
+												backgroundColor: "#f8f9fa",
+												boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+												outline: "none",
+												appearance: "none",
+												backgroundImage:
+													'url(\'data:image/svg+xml;charset=UTF-8,<svg fill="%23666" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>\')',
+												backgroundRepeat: "no-repeat",
+												backgroundPosition: "right 10px center",
+												backgroundSize: "24px 24px",
+												cursor: "pointer",
+											}}
+											onChange={(e) => setStatus(e.target.value)}
+										>
+											<option value="pending">Pending</option>
+											<option value="confirm">Confirm</option>
+										</select>
+									</div>
 								</Form.Group>
 
 								{loading && <Loading size={50} />}
-								<Button style={{ fontSize: 15, marginTop: 10, borderRadius: "0px" }} type="submit" variant="primary">
-									Submit
-								</Button>
+								<div style={{ display: "flex", justifyContent: "center" }}>
+									<Button
+										style={{
+											fontSize: "1rem",
+											fontWeight: "bold",
+											marginTop: "20px",
+											padding: "10px 30px",
+											backgroundColor: "#28a745", 
+											borderColor: "#28a745",
+											color: "white", 
+											borderRadius: "50px",
+											boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)", 
+											outline: "none",
+										}}
+										type="submit"
+									>
+										Submit
+									</Button>
+								</div>
 							</Form>
 						</Card.Body>
 						<br></br>
