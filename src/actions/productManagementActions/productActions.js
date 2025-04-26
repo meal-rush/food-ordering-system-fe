@@ -230,21 +230,17 @@ export const createProduct = (productData) => async (dispatch, getState) => {
 			// New fields
 			preparationTime: productData.preparationTime,
 			availability: productData.availability,
-			customizations: productData.customizations
+			customizations: productData.customizations,
 		};
 
 		//call the backend route
-		const { data } = await axios.post(
-			`${API_ENDPOINT}/items/products/vendor/product/add`,
-			payload,
-			config
-		);
+		const { data } = await axios.post(`${API_ENDPOINT}/items/products/vendor/product/add`, payload, config);
 
 		dispatch({
 			type: PRODUCTS_CREATE_SUCCESS,
 			payload: data,
 		});
-		
+
 		swal({
 			title: "Success !!!",
 			text: "Menu Item Creation Successful.",
@@ -252,7 +248,7 @@ export const createProduct = (productData) => async (dispatch, getState) => {
 			timer: 2000,
 			button: false,
 		});
-		
+
 		setTimeout(function () {
 			window.location.href = "/vendor-products";
 		}, 2000);
@@ -264,6 +260,77 @@ export const createProduct = (productData) => async (dispatch, getState) => {
 		});
 	}
 };
+
+// upadate product by vendor action
+// export const updateProductByVendor =
+// 	(
+// 		id,
+// 		vendorEmail,
+// 		title,
+// 		category,
+// 		productBrand,
+// 		productCode,
+// 		description,
+// 		picURL,
+// 		price,
+// 		ingredients,
+// 		usage,
+// 		warnings,
+// 		discountNote,
+// 		discountPrice,
+// 		quantity
+// 	) =>
+// 	async (dispatch, getState) => {
+// 		try {
+// 			dispatch({
+// 				type: PRODUCTS_UPDATE_BY_VENDOR_REQUEST,
+// 			});
+
+// 			const {
+// 				vendor_Login: { vendorInfo },
+// 			} = getState();
+
+// 			const config = {
+// 				headers: {
+// 					"Content-Type": "application/json",
+// 					Authorization: `Bearer ${vendorInfo.token}`,
+// 				},
+// 			};
+
+// 			//call the backend route
+// 			const { data } = await axios.put(
+// 				`${API_ENDPOINT}/items/products/vendor/product/get/${id}`,
+// 				{
+// 					vendorEmail,
+// 					title,
+// 					category,
+// 					productBrand,
+// 					productCode,
+// 					description,
+// 					picURL,
+// 					price,
+// 					ingredients,
+// 					usage,
+// 					warnings,
+// 					discountNote,
+// 					discountPrice,
+// 					quantity,
+// 				},
+// 				config
+// 			);
+
+// 			dispatch({
+// 				type: PRODUCTS_UPDATE_BY_VENDOR_SUCCESS,
+// 				payload: data,
+// 			});
+// 		} catch (error) {
+// 			const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+// 			dispatch({
+// 				type: PRODUCTS_UPDATE_BY_VENDOR_FAIL,
+// 				payload: message,
+// 			});
+// 		}
+// 	};
 
 // upadate product by vendor action
 export const updateProductByVendor =
@@ -282,7 +349,10 @@ export const updateProductByVendor =
 		warnings,
 		discountNote,
 		discountPrice,
-		quantity
+		quantity,
+		preparationTime,
+		availability,
+		customizations
 	) =>
 	async (dispatch, getState) => {
 		try {
@@ -319,6 +389,10 @@ export const updateProductByVendor =
 					discountNote,
 					discountPrice,
 					quantity,
+					// Include the new fields
+					preparationTime,
+					availability,
+					customizations,
 				},
 				config
 			);
