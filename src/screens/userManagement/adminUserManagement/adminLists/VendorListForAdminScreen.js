@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Row, Col, Form } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import MainScreen from "../../../../components/MainScreen";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { vendorDeleteProfileById, vendorsList } from "../../../../actions/userManagementActions/vendorActions";
 import Loading from "../../../../components/Loading";
-import {
-	Accordion,
-	AccordionItem,
-	AccordionItemHeading,
-	AccordionItemButton,
-	AccordionItemPanel,
-} from "react-accessible-accordion";
 import ErrorMessage from "../../../../components/ErrorMessage";
 import swal from "sweetalert";
 import "./userLists.css";
@@ -71,6 +64,41 @@ const VendorListForAdminScreen = () => {
 			});
 	};
 
+	const viewDetails = (vendor) => {
+		swal({
+			title: "Vendor Details",
+			content: {
+				element: "div",
+				attributes: {
+					innerHTML: `
+                        <img src="${vendor.pic}" class="profile-image" alt="${vendor.name}"/>
+                        <div style="text-align: left; padding: 10px;">
+                            <p><strong>Business Name:</strong> ${vendor.businessName}</p>
+                            <p><strong>Owner Name:</strong> ${vendor.name}</p>
+                            <p><strong>Email:</strong> ${vendor.email}</p>
+                            <p><strong>Phone:</strong> ${vendor.telephone}</p>
+                            <p><strong>Business Address:</strong> ${vendor.businessAddress}</p>
+                            <p><strong>Home Address:</strong> ${vendor.homeAddress}</p>
+                            <p><strong>Business Reg No:</strong> ${vendor.businessRegNumber}</p>
+                            <p><strong>Website:</strong> ${vendor.website}</p>
+                            <p><strong>Description:</strong> ${vendor.description}</p>
+                            <p><strong>Registered:</strong> ${vendor.regDate}</p>
+                        </div>
+                    `,
+				},
+			},
+			buttons: {
+				close: {
+					text: "Close",
+					value: null,
+					visible: true,
+					className: "btn btn-secondary",
+					closeModal: true,
+				},
+			},
+		});
+	};
+
 	const searchHandler = (e) => {
 		setSearch(e.target.value.toLowerCase());
 	};
@@ -78,196 +106,79 @@ const VendorListForAdminScreen = () => {
 	if (adminInfo) {
 		return (
 			<div className="vendorList">
-				<br></br>
-				<MainScreen title={`Welcome Back ${adminInfo && adminInfo.name}..`}>
-					<Row>
-						<Col>
-							<h1
-								style={{
-									display: "flex",
-									marginLeft: "10px",
-									width: "500px",
-									color: "azure",
-									fontStyle: "italic",
-								}}
-							>
-								Vendors List
-							</h1>
-						</Col>
-						<Col>
-							<div className="search" style={{ marginTop: 5, marginLeft: 150 }}>
-								<Form>
-									<input
-										type="text"
-										placeholder="Search..."
-										style={{
-											width: 400,
-											height: 40,
-											borderRadius: 50,
-											padding: "10px",
-											paddingLeft: "15px",
-											fontSize: 18,
-										}}
-										onChange={searchHandler}
-									/>
-								</Form>
+				<MainScreen>
+					<div className="dashboard-container">
+						<h1 className="dashboard-header">Welcome Back, {adminInfo?.name}</h1>
+						
+						<div className="d-flex justify-content-between align-items-center">
+							<Button variant="success" href="/admin">
+								Back to Dashboard
+							</Button>
+							<div className="search-container">
+								<input
+									type="text"
+									placeholder="Search vendors..."
+									className="search-box"
+									onChange={searchHandler}
+								/>
 							</div>
-						</Col>
-					</Row>
-					<br></br>
+						</div>
 
-					<Button variant="success" href="/admin">
-						Back to Dashboard
-					</Button>
+						{error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+						{errorDelete && <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>}
+						{loading && <Loading />}
 
-					<br></br>
-					{error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-					{errorDelete && <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>}
-					{loading && <Loading />}
-					{loadingDelete && <Loading />}
-					<br></br>
-					<div className="listContainer">
-						<Accordion allowZeroExpanded>
-							{vendors &&
-								vendors
-									.filter(
-										(filteredVendors) =>
-											filteredVendors.name.toLowerCase().includes(search.toLowerCase()) ||
-											filteredVendors.email.includes(search)
-									)
-									.reverse()
-									.map((vendorList) => (
-										<AccordionItem key={vendorList._id} className="listContainer">
-											<Card
-												style={{
-													margin: 10,
-													borderRadius: 25,
-													borderWidth: 1.0,
-													borderColor: "rgb(0,0,0,0.5)",
-													marginTop: 20,
-													paddingInline: 10,
-													background: "rgb(235, 235, 235)",
-												}}
-											>
-												<AccordionItemHeading>
-													<AccordionItemButton>
-														<Card.Header
-															style={{
-																display: "flex",
-																paddingInline: 10,
-																borderRadius: 25,
-																marginTop: 10,
-																marginBottom: 10,
-																borderColor: "black",
-																background: "#76BA99",
-															}}
-														>
-															<span
-																style={{
-																	color: "black",
-																	textDecoration: "none",
-																	flex: 1,
-																	cursor: "pointer",
-																	alignSelf: "center",
-																	fontSize: 18,
-																}}
-															>
-																<label
-																	className="nic"
-																	style={{
-																		paddingInline: 20,
-																		marginTop: 10,
-																		fontSize: 18,
-																	}}
-																>
-																	Vendor Email : &emsp;
-																	{vendorList.email}{" "}
-																</label>{" "}
-																<br></br>
-																<label className="name" style={{ paddingInline: 20, fontSize: 18 }}>
-																	Vendor Name : &emsp;
-																	{vendorList.name}
-																</label>{" "}
-															</span>
-															<div>
-																<Button
-																	style={{ marginTop: 20, fontSize: 15 }}
-																	href={`/admin-vendor-edit/${vendorList._id}`}
-																>
-																	Edit
-																</Button>
-															</div>
-															&emsp;
-															<div>
-																<Button
-																	style={{ marginTop: 20, fontSize: 15 }}
-																	variant="danger"
-																	className="mx-2"
-																	onClick={() => deleteHandler(vendorList._id)}
-																>
-																	Delete
-																</Button>
-															</div>
-														</Card.Header>
-													</AccordionItemButton>
-												</AccordionItemHeading>
-												<AccordionItemPanel>
-													<Card.Body>
-														<Row>
-															<Col md={6}>
-																<h5>Name - {vendorList.name}</h5>
-																<h5>Telephone - {vendorList.telephone}</h5>
-																<h5>Home Address - {vendorList.homeAddress}</h5>
-																<h5>Email - {vendorList.email}</h5>
-																<h5>Business Name - {vendorList.businessName}</h5>
-																<h5>Business Address - {vendorList.businessAddress}</h5>
-																<h5>Business Registration Number - {vendorList.businessRegNumber}</h5>
-																<h5>
-																	Description - <br></br>
-																	{vendorList.description}
-																</h5>{" "}
-																<br></br>
-															</Col>
-															<Col
-																style={{
-																	display: "flex",
-																	alignItems: "center",
-																	width: "500px",
-																	justifyContent: "center",
-																}}
-															>
-																<img
-																	style={{
-																		width: "75%",
-																		height: "100%",
-																	}}
-																	src={vendorList.pic}
-																	alt={vendorList.name}
-																	className="profilePic"
-																/>
-															</Col>
-														</Row>
-														<br></br>
-														<blockquote className="blockquote mb-0">
-															<Card.Footer
-																className="text-muted"
-																style={{
-																	borderRadius: 20,
-																	background: "white",
-																}}
-															>
-																Registered Date - <cite title="Source Title"> {vendorList.regDate}</cite>
-															</Card.Footer>
-														</blockquote>
-													</Card.Body>
-												</AccordionItemPanel>
-											</Card>
-										</AccordionItem>
+						<div className="dashboard-table">
+							<Table hover responsive>
+								<thead className="table-header">
+									<tr>
+										<th>Business Name</th>
+										<th>Owner Name</th>
+										<th>Email</th>
+										<th>Phone</th>
+										<th>Business Address</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									{vendors?.filter(vendor => 
+										vendor.businessName.toLowerCase().includes(search.toLowerCase()) ||
+										vendor.email.includes(search)
+									).map((vendor) => (
+										<tr key={vendor._id} className="table-row">
+											<td>{vendor.businessName}</td>
+											<td>{vendor.name}</td>
+											<td>{vendor.email}</td>
+											<td>{vendor.telephone}</td>
+											<td>{vendor.businessAddress}</td>
+											<td>
+												<div className="action-buttons">
+													<Button
+														className="btn-view"
+														onClick={() => viewDetails(vendor)}
+													>
+														View
+													</Button>
+													<Button
+														className="btn-edit"
+														href={`/admin-vendor-edit/${vendor._id}`}
+													>
+														Edit
+													</Button>
+													<Button
+														className="btn-delete"
+														onClick={() => deleteHandler(vendor._id)}
+													>
+														Delete
+													</Button>
+												</div>
+											</td>
+										</tr>
 									))}
-						</Accordion>
+								</tbody>
+							</Table>
+						</div>
 					</div>
-
-					<br></br>
 				</MainScreen>
 			</div>
 		);

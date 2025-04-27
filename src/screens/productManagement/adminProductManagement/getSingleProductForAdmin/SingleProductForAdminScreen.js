@@ -215,13 +215,14 @@ function SingleProductForAdminScreen({ match, history }) {
 					<Card
 						className="profileCont"
 						style={{
-							borderRadius: 45,
-							borderWidth: 2.0,
+							borderRadius: 25,
+							borderWidth: 1,
 							marginTop: 20,
 							paddingInline: 10,
 							paddingLeft: 25,
 							paddingRight: 25,
-							background: "rgba(231, 238, 238, 0.9)",
+							background: "#ffffff",
+							boxShadow: "0 8px 30px rgba(0, 0, 0, 0.05)",
 						}}
 					>
 						<div className="productContainer">

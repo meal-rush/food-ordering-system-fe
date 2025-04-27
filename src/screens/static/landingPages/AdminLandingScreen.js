@@ -1,150 +1,184 @@
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import { adminLogout } from "../../../actions/userManagementActions/adminActions";
 import "./landingScreen.css";
 import MainScreen from "../../../components/MainScreen";
+import { 
+  FaUserShield, 
+  FaUserPlus, 
+  FaUsers, 
+  FaStoreAlt, 
+  FaCubes, 
+  FaShoppingCart, 
+  FaTruckMoving,
+  FaSignOutAlt
+} from "react-icons/fa";
+import swal from "sweetalert";
 
 const AdminLandingScreen = ({ history }) => {
 	const admin_Login = useSelector((state) => state.admin_Login);
 	const { adminInfo } = admin_Login;
 	const dispatch = useDispatch();
+
 	const logoutHandler = () => {
-		dispatch(adminLogout());
-		history.push("/");
+		// Use SweetAlert for better UX
+		swal({
+			title: "Admin Logout",
+			text: "Are you sure you want to log out?",
+			icon: "warning",
+			buttons: {
+				cancel: {
+					text: "Cancel",
+					value: false,
+					visible: true,
+					className: "swal-button--cancel"
+				},
+				confirm: {
+					text: "Logout",
+					value: true,
+					visible: true,
+					className: "swal-button--danger"
+				}
+			},
+			dangerMode: true,
+		})
+		.then((willLogout) => {
+			if (willLogout) {
+				dispatch(adminLogout());
+				
+				swal({
+					title: "Logged Out",
+					text: "Admin session terminated successfully",
+					icon: "success",
+					timer: 2000,
+					button: false,
+				});
+				
+				setTimeout(() => {
+					history.push("/");
+				}, 2000);
+			}
+		});
 	};
+
+	const adminFeatures = [
+		{
+			title: "Admin Profile",
+			description: "Manage your administrator account",
+			icon: <FaUserShield size={40} className="admin-icon" />,
+			link: "/admin-view",
+			variant: "success",
+		},
+		{
+			title: "Register Admin",
+			description: "Create new administrator accounts",
+			icon: <FaUserPlus size={40} className="admin-icon" />,
+			link: "/admin-register",
+			variant: "success",
+		},
+		{
+			title: "Customer Accounts",
+			description: "Manage all customer accounts and profiles",
+			icon: <FaUsers size={40} className="admin-icon" />,
+			link: "/admin-customers",
+			variant: "success",
+		},
+		{
+			title: "Vendor Management",
+			description: "Oversee all restaurant partner accounts",
+			icon: <FaStoreAlt size={40} className="admin-icon" />,
+			link: "/admin-vendors",
+			variant: "success",
+		},
+		{
+			title: "Product Catalog",
+			description: "Manage all products across the platform",
+			icon: <FaCubes size={40} className="admin-icon" />,
+			link: "/admin-products",
+			variant: "success",
+		},
+		{
+			title: "Order Operations",
+			description: "Monitor and manage all customer orders",
+			icon: <FaShoppingCart size={40} className="admin-icon" />,
+			link: "/admin-orders",
+			variant: "success",
+		},
+		{
+			title: "Delivery System",
+			description: "Track and optimize delivery operations",
+			icon: <FaTruckMoving size={40} className="admin-icon" />,
+			link: "/admin-deliveries",
+			variant: "success",
+		}
+	];
 
 	if (adminInfo) {
 		return (
 			<div className="adminBackground">
-				<br></br>
-				<MainScreen title={`Welcome Back ${adminInfo && adminInfo.name}..`}>
-					<Button
-						variant="danger"
-						onClick={logoutHandler}
-						className="logoutBtn"
-						style={{ float: "right", marginTop: 3, fontSize: 15 }}
-					>
-						Logout
-					</Button>
-
-					<br></br>
-					<br></br>
-
-					<div className="loginContainer">
-						<Card
-							style={{
-								borderRadius: 45,
-								borderWidth: 2.0,
-								marginTop: 20,
-								paddingInline: 10,
-								background: "rgba(231, 238, 238, 0.8)",
-								marginLeft: "10%",
-								marginRight: "10%",
-							}}
-						>
-							<div className="intro-text">
-								<br></br>
-								<br></br>
-								<div>
-									<Link to="/admin-view">
-										<Button
-											id="landingBtn"
-											variant="success"
-											size="lg"
-											className="landingbutton"
-											style={{ width: 350, height: 75 }}
-										>
-											My Account
-										</Button>
-									</Link>
-									<Link to="/admin-register">
-										<Button
-											id="landingBtn"
-											variant="success"
-											size="lg"
-											className="landingbutton"
-											style={{ width: 350, height: 75 }}
-										>
-											Create New Admin Account
-										</Button>
-									</Link>
+				<MainScreen title={""}>
+					<Container fluid className="admin-dashboard-container">
+						{/* Admin Header Section */}
+						<Row className="admin-header-section">
+							<Col md={8} className="admin-welcome">
+								<div className="admin-title-area">
+									<h1>Admin Control Panel</h1>
+									<h3>Welcome, {adminInfo && adminInfo.name}</h3>
+									<p className="admin-subtitle">
+										Manage your entire platform from this centralized dashboard. You have full
+										access to all system operations and management tools.
+									</p>
+									<Button 
+										variant="danger" 
+										onClick={logoutHandler} 
+										className="admin-logout-btn"
+									>
+										<FaSignOutAlt /> Logout
+									</Button>
 								</div>
-								<br></br>
-								<div>
-									<Link to="/admin-customers">
-										<Button
-											id="landingBtn"
-											variant="success"
-											size="lg"
-											className="landingbutton"
-											style={{ width: 350, height: 75 }}
-										>
-											Customer Account Management
-										</Button>
-									</Link>
-									<Link to="/admin-vendors">
-										<Button
-											id="landingBtn"
-											variant="success"
-											size="lg"
-											className="landingbutton"
-											style={{ width: 350, height: 75 }}
-										>
-											Vendor Account Management
-										</Button>
-									</Link>
+							</Col>
+							<Col md={4} className="admin-stats">
+								<div className="admin-stat-card">
+									<h4>System Status</h4>
+									<p className="status-indicator online">Online</p>
+									<small>Last login: Today, {new Date().toLocaleTimeString()}</small>
 								</div>
-								<br></br>
-								<div>
-									<Link to="/admin-products">
-										<Button
-											id="landingBtn"
-											variant="success"
-											size="lg"
-											className="landingbutton"
-											style={{ width: 350, height: 75 }}
-										>
-											Product Management
-										</Button>
-									</Link>
-									<Link to="/admin-orders">
-										<Button
-											id="landingBtn"
-											variant="success"
-											size="lg"
-											className="landingbutton"
-											style={{ width: 350, height: 75 }}
-										>
-											Order Management
-										</Button>
-									</Link>
-								</div>
-								<br></br>
-								<div>
-									<Link to="/admin-deliveries">
-										<Button
-											id="landingBtn"
-											variant="success"
-											size="lg"
-											className="landingbutton"
-											style={{ width: 350, height: 75 }}
-										>
-											Deliveries Management
-										</Button>
-									</Link>
-								</div>
+							</Col>
+						</Row>
 
-								<br></br>
-							</div>
-							<br></br>
+						{/* Admin Features Section */}
+						<Row className="admin-features-section">
+							<Col xs={12}>
+								<h2 className="admin-section-title">Administration Tools</h2>
+							</Col>
 
-							<br></br>
-						</Card>
-					</div>
+							{adminFeatures.map((feature, index) => (
+								<Col key={index} lg={4} md={6} sm={12} className="admin-feature-col">
+									<Card className="admin-feature-card">
+										<Card.Body>
+											<div className={`admin-icon-container green-${index % 3 + 1}`}>
+												{feature.icon}
+											</div>
+											<Card.Title className="admin-card-title">{feature.title}</Card.Title>
+											<Card.Text>{feature.description}</Card.Text>
+											<Link to={feature.link}>
+												<Button 
+													variant="success" 
+													className="admin-feature-btn" 
+													block
+												>
+													Access Module
+												</Button>
+											</Link>
+										</Card.Body>
+									</Card>
+								</Col>
+							))}
+						</Row>
+					</Container>
 				</MainScreen>
-				<br></br>
-				<br></br>
 			</div>
 		);
 	} else {

@@ -242,3 +242,231 @@
 		font-size: 1.5rem;
 	}
 }
+
+/* Admin Dashboard Specific Styles with Green Theme */
+.adminBackground {
+	min-height: 100vh;
+	background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e9 100%);
+	padding-bottom: 30px;
+  }
+  
+  .admin-dashboard-container {
+	padding: 15px;
+  }
+  
+  /* Admin Header Section */
+  .admin-header-section {
+	background: #fff;
+	border-radius: 10px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	padding: 30px;
+	margin-bottom: 30px;
+	position: relative;
+	border-left: 5px solid #00c043d2;
+  }
+  
+  .admin-title-area h1 {
+	color: #000000;
+	font-size: 2.2rem;
+	font-weight: 700;
+	margin-bottom: 5px;
+  }
+  
+  .admin-title-area h3 {
+	color: #011a02ae;
+	font-size: 1.5rem;
+	font-weight: 600;
+	margin-bottom: 15px;
+  }
+  
+  .admin-subtitle {
+	color: #171c18;
+	font-size: 1rem;
+	line-height: 1.6;
+	margin-bottom: 20px;
+	max-width: 90%;
+  }
+  
+  .admin-logout-btn {
+	padding: 8px 20px;
+	font-weight: 600;
+	border-radius: 6px;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	transition: all 0.2s ease;
+	background-color: #d32f2f;
+	border-color: #c62828;
+  }
+  
+  .admin-logout-btn:hover {
+	background-color: #b71c1c;
+	border-color: #a31515;
+	box-shadow: 0 4px 8px rgba(211, 47, 47, 0.3);
+  }
+  
+  .admin-stats {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+  
+  .admin-stat-card {
+	background: #f1f8e9;
+	border-radius: 8px;
+	padding: 20px;
+	text-align: center;
+	width: 100%;
+	border-left: 4px solid #449148;
+  }
+  
+  .admin-stat-card h4 {
+	font-size: 1.2rem;
+	color: #1b461e;
+	margin-bottom: 10px;
+  }
+  
+  .status-indicator {
+	font-weight: 700;
+	font-size: 1.1rem;
+	margin-bottom: 10px;
+  }
+  
+  .status-indicator.online {
+	color: #20ae28;
+  }
+  
+  /* Admin Features Section */
+  .admin-features-section {
+	padding: 10px 0;
+  }
+  
+  .admin-section-title {
+	text-align: center;
+	color: #3d3e3d;
+	font-weight: 700;
+	margin-bottom: 25px;
+	position: relative;
+	padding-bottom: 12px;
+  }
+  
+  .admin-section-title:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 70px;
+	height: 3px;
+	background: #4a4848;
+	border-radius: 1.5px;
+  }
+  
+  .admin-feature-col {
+	margin-bottom: 25px;
+  }
+  
+  .admin-feature-card {
+	height: 100%;
+	border: none;
+	border-radius: 10px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+	transition: all 0.3s ease;
+	text-align: center;
+	padding: 5px;
+  }
+  
+  .admin-feature-card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 15px rgba(46, 125, 50, 0.15);
+	border-top: 3px solid #2e7d32;
+  }
+  
+  .admin-icon-container {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 10px auto 20px;
+	color: white;
+  }
+  
+  /* Green themed variants */
+  .admin-icon-container.green-1 {
+	background: linear-gradient(135deg, #60b764, #218d28);
+  }
+  
+  .admin-icon-container.green-2 {
+	background: linear-gradient(135deg, #60b764, #218d28);
+  }
+  
+  .admin-icon-container.green-3 {
+	background: linear-gradient(135deg, #60b764, #218d28);
+  }
+  
+  .admin-card-title {
+	font-weight: 700;
+	font-size: 1.2rem;
+	margin-bottom: 10px;
+	color: #000000;
+  }
+  
+  .admin-feature-card .card-text {
+	color: #46664a;
+	margin-bottom: 15px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+  
+  .admin-feature-btn {
+	border-radius: 6px;
+	padding: 8px 20px;
+	font-weight: 600;
+	transition: all 0.2s ease;
+	text-transform: uppercase;
+	font-size: 0.9rem;
+	letter-spacing: 0.5px;
+	background-color: #2e7d32;
+	border-color: #1b5e20;
+  }
+  
+  .admin-feature-btn:hover {
+	transform: translateY(-2px);
+	background-color: #1b5e20;
+	border-color: #0d400f;
+	box-shadow: 0 4px 8px rgba(46, 125, 50, 0.3);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 992px) {
+	.admin-header-section {
+	  text-align: center;
+	  padding: 25px 15px;
+	}
+	
+	.admin-subtitle {
+	  max-width: 100%;
+	}
+	
+	.admin-stats {
+	  margin-top: 25px;
+	}
+  }
+  
+  @media (max-width: 768px) {
+	.admin-feature-col {
+	  padding: 0 10px;
+	}
+	
+	.admin-title-area h1 {
+	  font-size: 1.8rem;
+	}
+	
+	.admin-title-area h3 {
+	  font-size: 1.3rem;
+	}
+  }

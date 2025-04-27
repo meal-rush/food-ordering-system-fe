@@ -20,88 +20,115 @@ export default function AdminUpdateDelivery({ match, history }) {
 		e.preventDefault();
 		dispatch(updateDeliveryStatusAction(match.params.id, status));
 	};
+
 	if (adminInfo) {
 		return (
-			<div
-				className="adminUpdate"
-				style={{
-					background: "#088395",
-				}}
-			>
-				<br></br>
-				<br></br>
-				<MainScreen title="">
-					<br></br>
-					<br></br>
-
+			<div className="admin-update-page">
+				<MainScreen title={<span style={{ color: '#000000' }}>Update Delivery Status</span>}>
 					<Button
-						variant="success"
-						style={{
-							float: "left",
-							marginTop: 5,
-							fontSize: 15,
-						}}
+						variant="primary"
 						href="/admin-deliveries"
+						className="back-button"
 					>
-						{" "}
-						Back To Delivery List
+						← Back to Deliveries
 					</Button>
-					<br></br>
-					<br></br>
-					<br></br>
-					<br></br>
-					<Card
-						style={{
-							width: "60%",
-							bdeliveryWidth: 0,
-							padding: 15,
-							outline: "none",
-							marginLeft: 300,
-							background: "rgba(231, 238, 238, 0.8)",
-							borderRadius: 45,
-						}}
-					>
+
+					<Card className="update-status-card">
 						<Card.Body>
-							<br></br>
 							<Form onSubmit={updateHandler}>
 								{error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-								<Form.Group controlId="reply">
-									<Form.Label
-										style={{
-											fontSize: 25,
-										}}
-									>
-										Status
-									</Form.Label>
-									<br></br>
-									<br></br>
-
-									<select
-										style={{
-											height: "35px",
-											width: "100%",
-											bdeliveryRadius: 5,
-											bdeliveryColor: "#808080",
-											bdeliveryWidth: 0.5,
-										}}
+								
+								<Form.Group className="status-group">
+									<Form.Label className="status-label">Update Status</Form.Label>
+									<Form.Select 
 										onChange={(e) => setStatus(e.target.value)}
+										className="status-select"
 									>
 										<option value="Processing">Processing</option>
 										<option value="Dispatched">Dispatched</option>
 										<option value="Delivered">Delivered</option>
-									</select>
+									</Form.Select>
 								</Form.Group>
 
 								{loading && <Loading size={50} />}
-								<br></br>
-								<Button style={{ fontSize: 15, marginTop: 10 }} type="submit" variant="primary">
-									Submit
+								
+								<Button type="submit" className="update-btn">
+									Update Status
 								</Button>
 							</Form>
 						</Card.Body>
-						<br></br>
 					</Card>
 				</MainScreen>
+				<style jsx>{`
+					.admin-update-page {
+						background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+						min-height: 100vh;
+						padding: 30px;
+					}
+					.back-button {
+						margin-bottom: 25px;
+						background: #0a5c6d;
+						border: none;
+						padding: 12px 24px;
+						border-radius: 10px;
+						font-weight: 500;
+						transition: all 0.3s ease;
+					}
+					.back-button:hover {
+						background: #088395;
+						transform: translateY(-2px);
+						box-shadow: 0 4px 8px rgba(8,131,149,0.2);
+					}
+					.update-status-card {
+						max-width: 550px;
+						margin: 0 auto;
+						border-radius: 20px;
+						border: none;
+						box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+						background: #ffffff;
+						padding: 10px;
+					}
+					.status-group {
+						margin: 25px 0;
+					}
+					.status-label {
+						font-weight: 600;
+						color: #2c3e50;
+						margin-bottom: 10px;
+					}
+					.status-select {
+						height: 50px;
+						border-radius: 12px;
+						border: 2px solid #e0e0e0;
+						padding: 0 20px;
+						margin-top: 12px;
+						transition: all 0.3s ease;
+						font-size: 16px;
+						margin-left: 50px;
+						background-color: #f8f9fa;
+					}
+					.status-select:focus {
+						border-color: #088395;
+						box-shadow: 0 0 0 4px rgba(8,131,149,0.1);
+						background-color: #ffffff;
+					}
+					.update-btn {
+						width: 100%;
+						background: linear-gradient(135deg, #088395, #0a5c6d);
+						border: none;
+						padding: 14px;
+						border-radius: 12px;
+						margin-top: 25px;
+						font-weight: 600;
+						letter-spacing: 0.5px;
+						transition: all 0.3s ease;
+					}
+					.update-btn:hover {
+						transform: translateY(-2px);
+						box-shadow: 0 6px 12px rgba(8,131,149,0.2);
+						background: linear-gradient(135deg, #0a5c6d, #088395);
+					}
+				`}</style>
 			</div>
 		);
 	} else {

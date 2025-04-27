@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Row, Col, Form } from "react-bootstrap";
-import {
-	Accordion,
-	AccordionItem,
-	AccordionItemHeading,
-	AccordionItemButton,
-	AccordionItemPanel,
-} from "react-accessible-accordion";
+import { Button, Form, Modal } from "react-bootstrap";
 import MainScreen from "../../../../components/MainScreen";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,12 +25,18 @@ const ProductsListForAdminScreen = () => {
 	const { success: successCreate } = productCreate;
 
 	const productUpdateByAdmin = useSelector((state) => state.productUpdateByAdmin);
-	const { success: successUpdate } = productUpdateByAdmin; //taking out products update state from redux
+	const { success: successUpdate } = productUpdateByAdmin;
 
 	const [search, setSearch] = useState("");
+	const [filterVendor, setFilterVendor] = useState("all");
+	const [filterCategory, setFilterCategory] = useState("all");
+	const [filterBrand, setFilterBrand] = useState("all");
 
 	const productDeleteByAdmin = useSelector((state) => state.productDeleteByAdmin);
 	const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDeleteByAdmin;
+
+	const [showModal, setShowModal] = useState(false);
+	const [selectedProduct, setSelectedProduct] = useState(null);
 
 	const deleteHandler = (id) => {
 		swal({
@@ -67,9 +66,39 @@ const ProductsListForAdminScreen = () => {
 				});
 			});
 	};
+
 	const searchHandler = (e) => {
 		setSearch(e.target.value.toLowerCase());
 	};
+
+	const handleView = (product) => {
+		setSelectedProduct(product);
+		setShowModal(true);
+	};
+
+	const getUniqueValues = (data, key) => {
+		if (!data) return [];
+		return [...new Set(data.map((item) => item[key]))];
+	};
+
+	const getStats = (products) => {
+		if (!products) return { totalProducts: 0, totalVendors: 0, totalCategories: 0, totalBrands: 0 };
+		return {
+			totalProducts: products.length,
+			totalVendors: new Set(products.map(p => p.vendorEmail)).size,
+			totalCategories: new Set(products.map(p => p.category)).size,
+			totalBrands: new Set(products.map(p => p.productBrand)).size
+		};
+	};
+
+	const filteredProducts = products?.filter((product) => {
+		const matchesSearch = product.title.toLowerCase().includes(search.toLowerCase());
+		const matchesVendor = filterVendor === "all" || product.vendorEmail === filterVendor;
+		const matchesCategory = filterCategory === "all" || product.category === filterCategory;
+		const matchesBrand = filterBrand === "all" || product.productBrand === filterBrand;
+
+		return matchesSearch && matchesVendor && matchesCategory && matchesBrand;
+	});
 
 	const history = useHistory();
 
@@ -79,199 +108,226 @@ const ProductsListForAdminScreen = () => {
 			history.push("/access-denied");
 		}
 	}, [dispatch, successCreate, history, adminInfo, successUpdate, successDelete]);
+
 	if (adminInfo) {
 		return (
-			<div className="adminProductList">
-				<br></br>
-				<MainScreen title={`Welcome Back ${adminInfo && adminInfo.name}..`}>
-					<Row>
-						<Col>
-							<h1
-								style={{
-									display: "flex",
-									marginLeft: "10px",
-									width: "500px",
-									color: "azure",
-									fontStyle: "italic",
-								}}
-							>
-								Products List
+			<div className="dashboard-wrapper">
+				<MainScreen>
+					<div className="dashboard-header">
+						<div className="header-content">
+							<h1 className="dashboard-title">
+								Products Dashboard
+								<small className="dashboard-subtitle">
+									Welcome back, {adminInfo?.name}
+								</small>
 							</h1>
-						</Col>
-						<Col>
-							<div className="search" style={{ marginTop: 5, marginLeft: 150 }}>
-								<Form>
-									<input
-										type="text"
-										placeholder="Search..."
-										style={{
-											width: 400,
-											height: 40,
-											borderRadius: 50,
-											padding: "10px",
-											paddingLeft: "15px",
-											fontSize: 18,
-										}}
-										onChange={searchHandler}
-									/>
-								</Form>
+							<Button variant="dark" href="/admin">Back to Dashboard</Button>
+						</div>
+
+						{/* Stats Cards */}
+						{products && (
+							<div className="stats-grid">
+								{Object.entries(getStats(products)).map(([key, value]) => (
+									<div key={key} className="stat-card">
+										<div className="stat-value">{value}</div>
+										<div className="stat-label">{key.replace('total', '')}</div>
+									</div>
+								))}
 							</div>
-						</Col>
-					</Row>
-					<br></br>
-
-					<Button variant="success" href="/admin" style={{ float: "left", fontSize: "15px" }}>
-						Back to Dashboard
-					</Button>
-
-					<br></br>
-					{error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-					{errorDelete && <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>}
-					{loading && <Loading />}
-					{loadingDelete && <Loading />}
-					<br></br>
-					<div className="listContainer">
-						<Accordion allowZeroExpanded>
-							{products &&
-								products
-									.filter(
-										(filteredProducts) =>
-											filteredProducts.title.toLowerCase().includes(search.toLowerCase()) ||
-											filteredProducts.productBrand.includes(search.toLowerCase)
-									)
-									.reverse()
-									.map((adminProductList) => (
-										<AccordionItem key={adminProductList._id} className="listContainer">
-											<Card
-												style={{
-													margin: 10,
-													borderRadius: 25,
-													borderWidth: 1.0,
-													borderColor: "rgb(0,0,0,0.5)",
-													marginTop: 20,
-													paddingInline: 10,
-													background: "rgb(235, 235, 235)",
-												}}
-											>
-												<AccordionItemHeading>
-													<AccordionItemButton>
-														<Card.Header
-															style={{
-																display: "flex",
-																paddingInline: 10,
-																borderRadius: 25,
-																marginTop: 10,
-																marginBottom: 10,
-																borderColor: "black",
-																background: "#76BA99",
-															}}
-														>
-															<span
-																style={{
-																	color: "black",
-																	textDecoration: "none",
-																	flex: 1,
-																	cursor: "pointer",
-																	alignSelf: "center",
-																	fontSize: 18,
-																}}
-															>
-																<label
-																	className="nic"
-																	style={{
-																		paddingInline: 20,
-																		marginTop: 10,
-																		fontSize: 18,
-																	}}
-																>
-																	Product Name : &emsp;
-																	{adminProductList.title}{" "}
-																</label>{" "}
-																<br></br>
-																<label className="name" style={{ paddingInline: 20, fontSize: 18 }}>
-																	Product Brand : &emsp;
-																	{adminProductList.productBrand}
-																</label>{" "}
-															</span>
-															<div>
-																<Button
-																	style={{ marginTop: 20, fontSize: 15 }}
-																	href={`/admin-product-edit/${adminProductList._id}`}
-																>
-																	Edit
-																</Button>
-															</div>
-															&emsp;
-															<div>
-																<Button
-																	style={{ marginTop: 20, fontSize: 15 }}
-																	variant="danger"
-																	className="mx-2"
-																	onClick={() => deleteHandler(adminProductList._id)}
-																>
-																	Delete
-																</Button>
-															</div>
-														</Card.Header>
-													</AccordionItemButton>
-												</AccordionItemHeading>
-												<AccordionItemPanel>
-													<Card.Body>
-														<Row>
-															<Col md={6}>
-																<h5>Vendor Email - {adminProductList.vendorEmail}</h5>
-																<h5>Product Name - {adminProductList.title}</h5>
-																<h5>Product Category - {adminProductList.category}</h5>
-																<h5>Product Brand - {adminProductList.productBrand}</h5>
-																<h5>Product Code - {adminProductList.productCode}</h5>
-																<h5>Description - {adminProductList.description}</h5>
-																<h5>Price - {adminProductList.price}</h5>
-																<h5>Product Ingredients - {adminProductList.ingredients}</h5>
-																<h5>Usage - {adminProductList.usage}</h5>
-																<h5>Warnings - {adminProductList.warnings}</h5>
-																<h5>Discount Note - {adminProductList.discountNote}</h5>
-																<h5>Discount Price - {adminProductList.discountPrice}</h5>
-																<h5>Quantity - {adminProductList.quantity}</h5>
-																<br></br>
-															</Col>
-															<Col
-																style={{
-																	display: "flex",
-																	alignItems: "center",
-																	width: "500px",
-																	justifyContent: "center",
-																}}
-															>
-																<img
-																	style={{
-																		width: "50%",
-																		height: "70%",
-																	}}
-																	src={adminProductList.picURL}
-																	alt={adminProductList.name}
-																	className="profilePic"
-																/>
-															</Col>
-														</Row>
-														<br></br>
-														<blockquote className="blockquote mb-0">
-															<Card.Footer
-																className="text-muted"
-																style={{
-																	borderRadius: 20,
-																	background: "white",
-																}}
-															/>
-														</blockquote>
-													</Card.Body>
-												</AccordionItemPanel>
-											</Card>
-										</AccordionItem>
-									))}
-						</Accordion>
+						)}
 					</div>
 
-					<br></br>
+					<div className="admin-card">
+						{/* Modern Filter Section */}
+						<div className="filter-header">
+							<div className="filter-title">Filter Products</div>
+							<div className="filter-actions">
+								<div className="filter-group">
+									<select
+										className="filter-select"
+										value={filterVendor}
+										onChange={(e) => setFilterVendor(e.target.value)}
+									>
+										<option value="all">All Vendors</option>
+										{getUniqueValues(products, "vendorEmail").map((vendor) => (
+											<option key={vendor} value={vendor}>
+												{vendor}
+											</option>
+										))}
+									</select>
+
+									<select
+										className="filter-select"
+										value={filterCategory}
+										onChange={(e) => setFilterCategory(e.target.value)}
+									>
+										<option value="all">All Categories</option>
+										{getUniqueValues(products, "category").map((category) => (
+											<option key={category} value={category}>
+												{category}
+											</option>
+										))}
+									</select>
+
+									<select
+										className="filter-select"
+										value={filterBrand}
+										onChange={(e) => setFilterBrand(e.target.value)}
+									>
+										<option value="all">All Brands</option>
+										{getUniqueValues(products, "productBrand").map((brand) => (
+											<option key={brand} value={brand}>
+												{brand}
+											</option>
+										))}
+									</select>
+								</div>
+								<div className="search-container">
+									<i className="fas fa-search search-icon"></i>
+									<input
+										type="text"
+										placeholder="Search products..."
+										className="search-input"
+										onChange={searchHandler}
+									/>
+								</div>
+							</div>
+						</div>
+
+						{/* Enhanced Table */}
+						<div className="table-container">
+							<table className="admin-table">
+								<thead>
+									<tr>
+										<th>Image</th>
+										<th>Product Details</th>
+										<th>Vendor</th>
+										<th>Category & Brand</th>
+										<th>Price Info</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									{filteredProducts?.map((product) => (
+										<tr key={product._id}>
+											<td>
+												<div className="product-image-container">
+													<img
+														src={product.picURL}
+														alt={product.title}
+														className="table-image"
+													/>
+												</div>
+											</td>
+											<td>
+												<div className="product-info">
+													<div className="product-name">{product.title}</div>
+													<div className="product-code">{product.productCode}</div>
+												</div>
+											</td>
+											<td>
+												<div className="vendor-info">
+													<span className="vendor-email">{product.vendorEmail}</span>
+												</div>
+											</td>
+											<td>
+												<div className="category-brand-info">
+													<span className="category-badge">{product.category}</span>
+													<span className="brand-name">{product.productBrand}</span>
+												</div>
+											</td>
+											<td>
+												<div className="price-info">
+													<div className="main-price">${product.price}</div>
+													{product.discountPrice && (
+														<div className="discount-price">${product.discountPrice}</div>
+													)}
+												</div>
+											</td>
+											<td>
+												<div className="action-buttons">
+													<Button
+														size="sm"
+														variant="outline-dark"
+														className="btn-action"
+														onClick={() => handleView(product)}
+													>
+														View
+													</Button>
+													<Button
+														size="sm"
+														variant="success"
+														className="btn-action"
+														href={`/admin-product-edit/${product._id}`}
+													>
+														Edit
+													</Button>
+													<Button
+														size="sm"
+														variant="outline-danger"
+														className="btn-action"
+														onClick={() => deleteHandler(product._id)}
+													>
+														Delete
+													</Button>
+												</div>
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<Modal 
+						show={showModal} 
+						onHide={() => setShowModal(false)}
+						size="lg"
+						centered
+					>
+						<Modal.Header closeButton>
+							<Modal.Title style={{ color: '#000' }}>Product Details</Modal.Title>
+						</Modal.Header>
+						<Modal.Body>
+							{selectedProduct && (
+								<div className="product-details">
+									<div className="d-flex justify-content-center mb-4">
+										<img
+											src={selectedProduct.picURL}
+											alt={selectedProduct.title}
+											style={{
+												width: "200px",
+												height: "200px",
+												borderRadius: "10px",
+												objectFit: "cover"
+											}}
+										/>
+									</div>
+									<div className="row">
+										<div className="col-md-6">
+											<h5>Basic Information</h5>
+											<p><strong>Name:</strong> {selectedProduct.title}</p>
+											<p><strong>Brand:</strong> {selectedProduct.productBrand}</p>
+											<p><strong>Category:</strong> {selectedProduct.category}</p>
+											<p><strong>Code:</strong> {selectedProduct.productCode}</p>
+											<p><strong>Price:</strong> ${selectedProduct.price}</p>
+											<p><strong>Discount Price:</strong> ${selectedProduct.discountPrice}</p>
+											<p><strong>Quantity:</strong> {selectedProduct.quantity}</p>
+										</div>
+										<div className="col-md-6">
+											<h5>Additional Details</h5>
+											<p><strong>Vendor:</strong> {selectedProduct.vendorEmail}</p>
+											<p><strong>Description:</strong> {selectedProduct.description}</p>
+											<p><strong>Ingredients:</strong> {selectedProduct.ingredients}</p>
+											<p><strong>Usage:</strong> {selectedProduct.usage}</p>
+											<p><strong>Warnings:</strong> {selectedProduct.warnings}</p>
+											<p><strong>Discount Note:</strong> {selectedProduct.discountNote}</p>
+										</div>
+									</div>
+								</div>
+							)}
+						</Modal.Body>
+					</Modal>
 				</MainScreen>
 			</div>
 		);

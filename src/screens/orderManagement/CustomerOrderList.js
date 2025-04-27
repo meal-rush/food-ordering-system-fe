@@ -10,97 +10,64 @@ import MainScreen from "../../components/MainScreen";
 import "./orderLists.css";
 
 export default function CustomerOrderList() {
-	const dispatch = useDispatch();
-	const customer_Login = useSelector((state) => state.customer_Login);
-	const { customerInfo } = customer_Login;
+    const dispatch = useDispatch();
+    const customer_Login = useSelector((state) => state.customer_Login);
+    const { customerInfo } = customer_Login;
 
-	const customerOrderList = useSelector((state) => state.customerOrderList);
-	const { loading, customerOrders, error } = customerOrderList;
+    const customerOrderList = useSelector((state) => state.customerOrderList);
+    const { loading, customerOrders, error } = customerOrderList;
 
-	const history = useHistory();
-	useEffect(() => {
-		dispatch(listCustomerOrders());
-	}, [dispatch, history, customerInfo]);
+    const history = useHistory();
+    useEffect(() => {
+        dispatch(listCustomerOrders());
+    }, [dispatch, history, customerInfo]);
 
-	if (customerInfo) {
-		return (
-			<div className="orderCustomerList">
-				<br></br>
-				<MainScreen title="">
-					<div
-						style={{
-							minHeight: 700,
-							marginBottom: "100px",
-						}}
-					>
-						<br></br>
-						<h1 style={{ fontWeight: "400", fontSize: "50px" }}>ORDER LIST</h1>
-						<br></br>
-						{error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-						{loading && <Loading />}
-						<Table style={{ background: "white", borderRadius: 10, width: "1000px" }}>
-							<>
-								<tbody>
-									{customerOrders?.reverse().map((order) => (
-										<tr
-											key={order._id}
-											style={{
-												boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-												borderRadius: 10,
-											}}
-										>
-											<td
-												style={{
-													fontSize: 20,
-												}}
-											>
-												{order.orderID}
-											</td>
-											<td
-												style={{
-													fontSize: 20,
-												}}
-											>
-												{order.products}
-											</td>
-											<td
-												style={{
-													fontSize: 20,
-												}}
-											>
-												{order.total}
-											</td>
-											<td>
-												<Button
-													href={`/payment/${order._id}`}
-													style={{
-														fontSize: 15,
-														backgroundColor: "red",
-														borderRadius: 0,
-														border: "3px solid white",
-													}}
-													disabled={order.status === "pending" || order.status === "paid"}
-												>
-													{order.status}
-												</Button>
-											</td>
-										</tr>
-									))}
-								</tbody>
-							</>
-						</Table>
-
-						<br></br>
-					</div>
-				</MainScreen>
-			</div>
-		);
-	} else {
-		return (
-			<div className="denied">
-				<MainScreen />
-				<br></br>
-			</div>
-		);
-	}
+    if (customerInfo) {
+        return (
+            <div className="order-container">
+                <MainScreen title="">
+                    <div className="order-content">
+                        <h1 className="order-title">My Orders</h1>
+                        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+                        {loading && <Loading />}
+                        <Table className="order-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Products</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {customerOrders?.reverse().map((order) => (
+                                    <tr key={order._id} className="order-row">
+                                        <td>{order.orderID}</td>
+                                        <td>{order.products}</td>
+                                        <td>${order.total.toFixed(2)}</td>
+                                        <td>
+                                            <Button
+                                                href={`/payment/${order._id}`}
+                                                className={`status-button status-${order.status.toLowerCase()}`}
+                                                disabled={order.status === "pending" || order.status === "paid"}
+                                            >
+                                                {order.status}
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </div>
+                </MainScreen>
+            </div>
+        );
+    } else {
+        return (
+            <div className="denied">
+                <MainScreen />
+                <br></br>
+            </div>
+        );
+    }
 }
