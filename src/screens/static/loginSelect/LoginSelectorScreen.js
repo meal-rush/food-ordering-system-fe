@@ -119,7 +119,7 @@ const LoginSelectorScreen = () => {
 						<Card.Text>
 						  Manage and fulfill customer deliveries
 						</Card.Text>
-						<a href="/delivery-login" className="role-btn delivery-btn">
+						<a href="/driver-login" className="role-btn delivery-btn">
 						  Login <FaArrowRight className="btn-icon" />
 						</a>
 					  </Card.Body>

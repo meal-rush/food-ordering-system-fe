@@ -71,6 +71,12 @@ import {
 	deliveryUpdateByIdReducer,
 } from "./reducers/deliveryManagementReducers/deliveriesReducer";
 
+import {
+	driverLoginReducer,
+	driverRegisterReducer,
+	driverUpdateStatusReducer,
+} from "./reducers/driverManagementReducers/driverReducers";
+
 const reducer = combineReducers({
 	admin_Login: adminLoginReducer,
 	adminRegistration: adminRegisterReducer,
@@ -125,6 +131,10 @@ const reducer = combineReducers({
 	deliveryUpdateStatus: deliveryUpdateReducer,
 	deliveryViewById: deliveryGetByIdReducer,
 	deliveryUpdateById: deliveryUpdateByIdReducer,
+
+	driver_Login: driverLoginReducer,
+	driverRegister: driverRegisterReducer,
+	driverUpdateStatus: driverUpdateStatusReducer,
 });
 
 const adminInfoFromStorage = localStorage.getItem("adminInfo") ? JSON.parse(localStorage.getItem("adminInfo")) : null;
@@ -137,10 +147,15 @@ const vendorInfoFromStorage = localStorage.getItem("vendorInfo")
 	? JSON.parse(localStorage.getItem("vendorInfo"))
 	: null;
 
+const driverInfoFromStorage = localStorage.getItem("driverInfo") 
+	? JSON.parse(localStorage.getItem("driverInfo")) 
+	: null;
+
 const initialState = {
 	admin_Login: { adminInfo: adminInfoFromStorage },
 	customer_Login: { customerInfo: customerInfoFromStorage },
 	vendor_Login: { vendorInfo: vendorInfoFromStorage },
+	driver_Login: { driverInfo: driverInfoFromStorage },
 };
 
 const middleware = [thunk];

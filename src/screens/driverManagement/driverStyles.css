@@ -1,0 +1,280 @@
+.driver-dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 2rem 0;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.welcome-section h1 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-section p {
+  color: #6c757d;
+  font-size: 1.1rem;
+}
+
+.status-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.active-delivery-card, 
+.available-deliveries-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.delivery-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.detail-item svg {
+  color: #4caf50;
+  font-size: 1.5rem;
+}
+
+.detail-item h5 {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.detail-item p {
+  margin: 0;
+  color: #666;
+}
+
+.complete-btn {
+  width: 100%;
+  padding: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Status badges */
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-weight: 500;
+}
+
+.status-badge.processing {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.status-badge.on-delivery {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.on-the-way {
+  background: #fce4ec;
+  color: #c2185b;
+}
+
+.status-badge.delivered {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.driver-assigned {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-badge.driver-arrived-at-restaurant {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.picked-up {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.status-badge.arrived {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.status-badge.completed {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.status-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.status-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.active-delivery-container {
+  margin: 2rem 0;
+}
+
+.delivery-header {
+  background: linear-gradient(135deg, #089595 0%, #0a5c6d 100%);
+  color: white;
+  padding: 1.5rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delivery-badge {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+
+.status-timeline {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem 0;
+  padding: 0 1rem;
+  position: relative;
+}
+
+.status-timeline::before {
+  content: '';
+  position: absolute;
+  top: 25px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #e0e0e0;
+  z-index: 1;
+}
+
+.timeline-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.timeline-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #e0e0e0;
+  font-size: 1.5rem;
+  color: #9e9e9e;
+  transition: all 0.3s ease;
+}
+
+.timeline-item.active .timeline-icon {
+  background: #089595;
+  border-color: #0a5c6d;
+  color: white;
+}
+
+.timeline-text {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.deliveries-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.delivery-item {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.delivery-item:hover {
+  transform: translateY(-4px);
+}
+
+.delivery-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.delivery-item-details {
+  margin: 1rem 0;
+  color: #666;
+}
+
+.accept-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  font-weight: 500;
+}
+
+.no-deliveries {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+}
+
+.no-deliveries svg {
+  color: #089595;
+  margin-bottom: 1rem;
+}
