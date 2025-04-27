@@ -77,61 +77,101 @@ const AdminRegisterScreen = () => {
 			return setPicMessage("Please Select an Image");
 		}
 	};
+
 	return (
-		<div className="registerBg">
-			<br></br>
-			<MainScreen title="REGISTER - ADMIN">
+		<div
+			style={{
+				background: "linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%)",
+				minHeight: "100vh",
+				padding: "2rem",
+			}}
+		>
+			<MainScreen>
 				<Button
 					variant="success"
 					style={{
-						float: "left",
-						marginTop: 5,
-						fontSize: 15,
+						marginBottom: "2rem",
+						backgroundColor: "#2e7d32",
+						border: "none",
+						padding: "0.8rem 1.5rem",
+						borderRadius: "12px",
+						fontSize: "0.95rem",
+						letterSpacing: "0.5px",
+						fontWeight: "500",
 					}}
 					href="/admin"
 				>
-					{" "}
-					Back to Dashboard
+					← Back to Dashboard
 				</Button>
-				<br></br>
-				<br></br>
-				<br></br>
-				<Card
-					className="profileCont"
+
+				<h2
 					style={{
-						borderRadius: 45,
-						borderWidth: 2.0,
-						marginTop: 20,
-						paddingInline: 10,
-						paddingLeft: 25,
-						paddingRight: 25,
-						background: "rgba(231, 238, 238, 0.8)",
+						color: "#1a1a1a",
+						textAlign: "center",
+						marginBottom: "2rem",
+						fontWeight: "600",
+						fontSize: "2.2rem",
+						letterSpacing: "1px",
 					}}
 				>
-					<div className="loginContainer">
-						<br></br>
-						<div>
-							{error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-							{message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
-							{loading && <Loading />}
-						</div>
-						<br></br>
-						<Row className="AdminProfileContainer">
+					Register New Admin
+				</h2>
+
+				<Card
+					style={{
+						borderRadius: "20px",
+						border: "none",
+						boxShadow: "0 20px 40px rgba(0,0,0,0.08)",
+						background: "linear-gradient(145deg, #ffffff, #f8f9fa)",
+						padding: "2.5rem",
+					}}
+				>
+					<div>
+						{error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+						{message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
+						{loading && <Loading />}
+
+						<Row className="AdminProfileContainer g-4">
 							<Col md={6}>
-								<Form onSubmit={submitHandler}>
-									<Form.Group controlId="adminName">
-										<Form.Label>Name</Form.Label>
+								<Form onSubmit={submitHandler} className="pe-md-4">
+									<Form.Group controlId="adminName" className="mb-3">
+										<Form.Label
+											style={{
+												color: "#2e7d32",
+												fontWeight: "500",
+												marginBottom: "0.5rem",
+												fontSize: "0.95rem",
+											}}
+										>
+											Name
+										</Form.Label>
 										<Form.Control
 											type="name"
 											value={name}
 											placeholder="Enter name"
 											onChange={(e) => setName(e.target.value)}
 											required
+											style={{
+												borderRadius: "10px",
+												padding: "0.8rem",
+												fontSize: "0.95rem",
+												backgroundColor: "#f8f9fa",
+												border: "1px solid #e0e0e0",
+											}}
 										/>
 									</Form.Group>
-									<br></br>
-									<Form.Group controlId="adminFormBasicTelephone">
-										<Form.Label>Telephone</Form.Label>
+
+									<Form.Group controlId="adminFormBasicTelephone" className="mb-3">
+										<Form.Label
+											style={{
+												color: "#2e7d32",
+												fontWeight: "500",
+												marginBottom: "0.5rem",
+												fontSize: "0.95rem",
+											}}
+										>
+											Telephone
+										</Form.Label>
 										<Form.Control
 											type="text"
 											value={telephone}
@@ -139,127 +179,232 @@ const AdminRegisterScreen = () => {
 											onChange={(e) => setTelephone(e.target.value)}
 											required
 											maxLength={10}
+											style={{
+												borderRadius: "10px",
+												padding: "0.8rem",
+												fontSize: "0.95rem",
+												backgroundColor: "#f8f9fa",
+												border: "1px solid #e0e0e0",
+											}}
 										/>
 									</Form.Group>
-									<br></br>
-									<Form.Group controlId="adminFormBasicAddress">
-										<Form.Label>Address</Form.Label>
+
+									<Form.Group controlId="adminFormBasicAddress" className="mb-3">
+										<Form.Label
+											style={{
+												color: "#2e7d32",
+												fontWeight: "500",
+												marginBottom: "0.5rem",
+												fontSize: "0.95rem",
+											}}
+										>
+											Address
+										</Form.Label>
 										<Form.Control
 											type="textArea"
 											value={address}
 											placeholder="Enter Address"
 											onChange={(e) => setAddress(e.target.value)}
 											required
+											style={{
+												borderRadius: "10px",
+												padding: "0.8rem",
+												fontSize: "0.95rem",
+												backgroundColor: "#f8f9fa",
+												border: "1px solid #e0e0e0",
+											}}
 										/>
 									</Form.Group>
-									<br></br>
-									<Form.Group controlId="adminFormBasicEmail">
-										<Form.Label>Email</Form.Label>
+
+									<Form.Group controlId="adminFormBasicEmail" className="mb-3">
+										<Form.Label
+											style={{
+												color: "#2e7d32",
+												fontWeight: "500",
+												marginBottom: "0.5rem",
+												fontSize: "0.95rem",
+											}}
+										>
+											Email
+										</Form.Label>
 										<Form.Control
 											type="email"
 											value={email}
 											placeholder="Enter Email Address"
 											onChange={(e) => setEmail(e.target.value)}
 											required
+											style={{
+												borderRadius: "10px",
+												padding: "0.8rem",
+												fontSize: "0.95rem",
+												backgroundColor: "#f8f9fa",
+												border: "1px solid #e0e0e0",
+											}}
 										/>
 									</Form.Group>
-									<br></br>
-									<Form.Group controlId="formBasicPassword">
-										<Form.Label>Password</Form.Label>
+
+									<Form.Group controlId="formBasicPassword" className="mb-3">
+										<Form.Label
+											style={{
+												color: "#2e7d32",
+												fontWeight: "500",
+												marginBottom: "0.5rem",
+												fontSize: "0.95rem",
+											}}
+										>
+											Password
+										</Form.Label>
 										<Form.Control
 											type="password"
 											value={password}
 											placeholder="Password"
 											onChange={(e) => setPassword(e.target.value)}
 											required
+											style={{
+												borderRadius: "10px",
+												padding: "0.8rem",
+												fontSize: "0.95rem",
+												backgroundColor: "#f8f9fa",
+												border: "1px solid #e0e0e0",
+											}}
 										/>
 									</Form.Group>
-									<br></br>
-									<Form.Group controlId="confirmPassword">
-										<Form.Label>Confirm Password</Form.Label>
+
+									<Form.Group controlId="confirmPassword" className="mb-3">
+										<Form.Label
+											style={{
+												color: "#2e7d32",
+												fontWeight: "500",
+												marginBottom: "0.5rem",
+												fontSize: "0.95rem",
+											}}
+										>
+											Confirm Password
+										</Form.Label>
 										<Form.Control
 											type="password"
 											value={confirmpassword}
 											placeholder="Confirm Password"
 											onChange={(e) => setConfirmPassword(e.target.value)}
 											required
+											style={{
+												borderRadius: "10px",
+												padding: "0.8rem",
+												fontSize: "0.95rem",
+												backgroundColor: "#f8f9fa",
+												border: "1px solid #e0e0e0",
+											}}
 										/>
 									</Form.Group>
-									<br></br>
+
 									{picMessage && <ErrorMessage variant="danger">{picMessage}</ErrorMessage>}
-									<Form.Group controlId="pic">
-										<Form.Label>Profile Picture</Form.Label>
+									<Form.Group controlId="pic" className="mb-3">
+										<Form.Label
+											style={{
+												color: "#2e7d32",
+												fontWeight: "500",
+												marginBottom: "0.5rem",
+												fontSize: "0.95rem",
+											}}
+										>
+											Profile Picture
+										</Form.Label>
 										&emsp;
 										<input
 											type="file"
 											accept="image/*"
 											id="admin-pic"
 											onChange={(e) => postDetails(e.target.files[0])}
+											style={{
+												borderRadius: "10px",
+												padding: "0.8rem",
+												fontSize: "0.95rem",
+												backgroundColor: "#f8f9fa",
+												border: "1px solid #e0e0e0",
+											}}
 										/>
 									</Form.Group>
-									<br></br>
-									<Button
-										variant="primary"
-										type="submit"
+
+									<div
 										style={{
-											fontSize: 15,
-											marginTop: 10,
+											display: "flex",
+											gap: "1rem",
+											marginTop: "2.5rem",
 										}}
 									>
-										Register
-									</Button>
-									&emsp;
-									<Button
-										variant="danger"
-										onClick={resetHandler}
-										style={{
-											fontSize: 15,
-											marginTop: 10,
-										}}
-									>
-										Reset
-									</Button>
-									&emsp;
-									<Button
-										variant="info"
-										onClick={demoHandler}
-										style={{
-											fontSize: 15,
-											marginTop: 10,
-										}}
-									>
-										Demo
-									</Button>
+										<Button
+											variant="success"
+											type="submit"
+											style={{
+												backgroundColor: "#2e7d32",
+												border: "none",
+												padding: "0.8rem",
+												borderRadius: "10px",
+												flex: 1,
+												fontWeight: "500",
+											}}
+										>
+											Register
+										</Button>
+										<Button
+											variant="danger"
+											onClick={resetHandler}
+											style={{
+												backgroundColor: "#d32f2f",
+												border: "none",
+												padding: "0.8rem",
+												borderRadius: "10px",
+												flex: 1,
+												fontWeight: "500",
+											}}
+										>
+											Reset
+										</Button>
+										<Button
+											variant="success"
+											onClick={demoHandler}
+											style={{
+												backgroundColor: "#388e3c",
+												border: "none",
+												padding: "0.8rem",
+												borderRadius: "10px",
+												flex: 1,
+												fontWeight: "500",
+											}}
+										>
+											Demo
+										</Button>
+									</div>
 								</Form>
 							</Col>
-							<Col
-								style={{
-									display: "flex",
-									alignItems: "center",
-									justifyContent: "center",
-								}}
-							>
-								<img
-									src={pic}
-									alt={name}
-									className="profilePic"
+							<Col md={6}>
+								<div
 									style={{
-										boxShadow: "7px 7px 20px ",
-										borderColor: "black",
-										borderRadius: 250,
-										background: "white",
-										width: "300px",
-										height: "300px",
+										display: "flex",
+										justifyContent: "center",
+										alignItems: "center",
+										height: "100%",
+										padding: "2rem",
 									}}
-								/>
+								>
+									<img
+										src={pic}
+										alt={name}
+										style={{
+											width: "320px",
+											height: "320px",
+											borderRadius: "50%",
+											objectFit: "cover",
+											boxShadow: "0 20px 40px rgba(0,0,0,0.12)",
+											border: "5px solid white",
+										}}
+									/>
+								</div>
 							</Col>
 						</Row>
-						<br></br>
 					</div>
 				</Card>
-				<br></br>
 			</MainScreen>
-			<br></br>
 		</div>
 	);
 };

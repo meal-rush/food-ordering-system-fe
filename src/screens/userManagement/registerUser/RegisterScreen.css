@@ -1,18 +1,54 @@
 .loginContainer {
-	display: flex;
-	flex-direction: column;
-	margin: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
 }
+
 .profileCont {
-	background: rgba(196, 201, 201, 0.5);
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: all 0.3s ease;
 }
+
+.profileCont:hover {
+  transform: translateY(-5px);
+}
+
 .registerBg {
-	background: url("https://res.cloudinary.com/dfmnpw0yp/image/upload/v1681482687/assets/hmlt9hmbl6jkt5fispj6.jpg");
-	background-position: center;
-	background-size: cover;
+  background: url("https://res.cloudinary.com/dfmnpw0yp/image/upload/v1681482687/assets/hmlt9hmbl6jkt5fispj6.jpg");
+  background-position: center;
+  background-size: cover;
 }
+
 .denied {
-	background: url("https://res.cloudinary.com/bytesquad202202/image/upload/v1660761809/images/accessDenied_zhvugi.jpg");
-	background-position: center;
-	background-size: cover;
+  background: url("https://res.cloudinary.com/bytesquad202202/image/upload/v1660761809/images/accessDenied_zhvugi.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.form-control {
+  transition: all 0.3s ease;
+  border: 1px solid #e0e0e0 !important;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2) !important;
+  border-color: #2e7d32 !important;
+}
+
+.btn {
+  transition: all 0.3s ease !important;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.form-label {
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
 }
