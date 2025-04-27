@@ -41,6 +41,8 @@ import DeliveriesCreate from "./screens/deliveryManagement/DeliveriesCreate";
 import AdminDeliveryList from "./screens/deliveryManagement/DeliveryListForAdmin";
 import AdminUpdateDelivery from "./screens/deliveryManagement/AdminUpdateDelivery";
 import CustomerDeliveryList from "./screens/deliveryManagement/DeliveriesForEachCustomer";
+import VendorOrderList from "./screens/orderManagement/VendorOrderList";
+import VendorUpdateOrder from "./screens/orderManagement/VendorUpdateOrder";
 
 const App = () => {
 	return (
@@ -86,6 +88,8 @@ const App = () => {
 				<Route path="/update-delivery/:id" component={AdminUpdateDelivery} exact />
 				<Route path="/payment/:id" component={StripeContainer} exact />
 				<Route path="/delivery-create/:id" component={DeliveriesCreate} exact />
+				<Route path="/vendor-orders" component={VendorOrderList} exact />
+<Route path="/vendor-update-order/:id" component={VendorUpdateOrder} exact/>
 			</main>
 			<Footer />
 		</BrowserRouter>
