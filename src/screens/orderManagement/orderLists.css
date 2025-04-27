@@ -1,5 +1,140 @@
 .denied {
-	background: url("https://res.cloudinary.com/bytesquad202202/image/upload/v1660761809/images/accessDenied_zhvugi.jpg");
-	background-position: center;
-	background-size: cover;
+    background: url("https://res.cloudinary.com/bytesquad202202/image/upload/v1660761809/images/accessDenied_zhvugi.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+.order-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.order-title {
+    color: #333;
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+}
+
+.order-table {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.order-table thead {
+    background-color: #f8f9fa;
+}
+
+.order-table th {
+    padding: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.order-table td {
+    padding: 1rem;
+    vertical-align: middle;
+    font-size: 1rem;
+}
+
+.order-row {
+    transition: all 0.3s ease;
+}
+
+.order-row:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+}
+
+.status-button {
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-weight: 500;
+    text-transform: capitalize;
+    transition: all 0.3s ease;
+}
+
+.status-pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.status-paid {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-unpaid {
+    background-color: #dc3545;
+    color: white;
+}
+
+.edit-button {
+    background-color: #007bff;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.filters-section {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+.search-input {
+    max-width: 300px;
+}
+
+.status-select {
+    width: 200px;
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+}
+
+.status-table-section {
+    margin-bottom: 3rem;
+}
+
+.status-heading {
+    color: #495057;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
+    border-left: 4px solid #007bff;
+}
+
+.status-processing {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.status-completed {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-cancelled {
+    background-color: #dc3545;
+    color: white;
+}
+
+.status-table-section:last-child {
+    margin-bottom: 0;
 }
