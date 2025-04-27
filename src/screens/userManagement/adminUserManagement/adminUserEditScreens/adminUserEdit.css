@@ -1,15 +1,153 @@
-.adminCustomerEditBg {
-	background: url("https://res.cloudinary.com/dfmnpw0yp/image/upload/v1681629622/assets/e03klgnmrsh2uz8qtzyt.jpg");
-	background-position: center;
-	background-size: cover;
-	background-repeat: no-repeat;
+.adminCustomerEditBg, .adminVendorEditBg {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+    padding: 2rem;
 }
-.adminVendorEditBg {
-	background: url("https://res.cloudinary.com/dfmnpw0yp/image/upload/v1681630047/assets/psqafuzegkmoimkpvvzk.jpg");
-	background-position: center;
-	background-size: cover;
-	background-repeat: no-repeat;
+
+.edit-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    padding: 2.5rem;
+    margin-top: 1.5rem;
+    transition: all 0.3s ease;
 }
+
+.edit-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+.edit-header {
+    color: #2c3e50;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.edit-header:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: #76BA99;
+    border-radius: 2px;
+}
+
+.form-label {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.form-control:focus {
+    border-color: #76BA99;
+    box-shadow: 0 0 0 0.25rem rgba(118, 186, 153, 0.25);
+}
+
+.profile-image-container {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: sticky;
+    top: 20px;
+}
+
+.profile-pic-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.profile-pic {
+    width: 220px !important;
+    height: 220px !important;
+    border-radius: 50% !important;
+    object-fit: cover;
+    border: 5px solid #76BA99;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1) !important;
+}
+
+.upload-section {
+    width: 100%;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.upload-section .form-label {
+    display: block;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.upload-section .form-control {
+    width: 100%;
+    padding: 0.8rem;
+    background: #f8f9fa;
+    border: 2px dashed #76BA99;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.upload-section .form-control:hover {
+    background: #edf2f7;
+    border-color: #5a9677;
+}
+
+.btn-back {
+    background-color: #76BA99 !important;
+    border: none !important;
+    padding: 0.8rem 1.5rem !important;
+    border-radius: 12px !important;
+    transition: all 0.3s ease !important;
+    margin-bottom: 1.5rem;
+    font-weight: 500 !important;
+}
+
+.btn-update {
+    background-color: #76BA99 !important;
+    border: none !important;
+    padding: 1rem !important;
+    border-radius: 12px !important;
+    transition: all 0.3s ease !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.btn-back:hover, .btn-update:hover {
+    background-color: #5a9677 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(90, 150, 119, 0.4);
+}
+
 .denied {
 	background: url("https://res.cloudinary.com/bytesquad202202/image/upload/v1660761809/images/accessDenied_zhvugi.jpg");
 	background-position: center;

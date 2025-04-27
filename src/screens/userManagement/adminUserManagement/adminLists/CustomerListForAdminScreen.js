@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Row, Col, Form } from "react-bootstrap";
+import { Button, Card, Row, Col, Form, Table } from "react-bootstrap";
 import MainScreen from "../../../../components/MainScreen";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { customerDeleteProfileById, customersList } from "../../../../actions/userManagementActions/customerActions";
 import Loading from "../../../../components/Loading";
-import {
-	Accordion,
-	AccordionItem,
-	AccordionItemHeading,
-	AccordionItemButton,
-	AccordionItemPanel,
-} from "react-accessible-accordion";
 import ErrorMessage from "../../../../components/ErrorMessage";
 import swal from "sweetalert";
 import "./userLists.css";
@@ -71,6 +64,36 @@ const CustomerListForAdminScreen = () => {
 			});
 	};
 
+	const viewDetails = (customer) => {
+		swal({
+			title: "Customer Details",
+			content: {
+				element: "div",
+				attributes: {
+					innerHTML: `
+                        <img src="${customer.pic}" class="profile-image" alt="${customer.name}"/>
+                        <div style="text-align: left; padding: 10px;">
+                            <p><strong>Name:</strong> ${customer.name}</p>
+                            <p><strong>Email:</strong> ${customer.email}</p>
+                            <p><strong>Phone:</strong> ${customer.telephone}</p>
+                            <p><strong>Address:</strong> ${customer.address}</p>
+                            <p><strong>Registered:</strong> ${customer.regDate}</p>
+                        </div>
+                    `
+				}
+			},
+			buttons: {
+				close: {
+					text: "Close",
+					value: null,
+					visible: true,
+					className: "btn btn-secondary",
+					closeModal: true,
+				}
+			}
+		});
+	};
+
 	const searchHandler = (e) => {
 		setSearch(e.target.value.toLowerCase());
 	};
@@ -78,189 +101,77 @@ const CustomerListForAdminScreen = () => {
 	if (adminInfo) {
 		return (
 			<div className="customerList">
-				<br></br>
-				<MainScreen title={`Welcome Back ${adminInfo && adminInfo.name}..`}>
-					<Row>
-						<Col>
-							<h1
-								style={{
-									display: "flex",
-									marginLeft: "10px",
-									width: "500px",
-									color: "azure",
-									fontStyle: "italic",
-								}}
-							>
-								Customers List
-							</h1>
-						</Col>
-						<Col>
-							<div className="search" style={{ marginTop: 5, marginLeft: 150 }}>
-								<Form>
-									<input
-										type="text"
-										placeholder="Search..."
-										style={{
-											width: 400,
-											height: 40,
-											borderRadius: 50,
-											padding: "10px",
-											paddingLeft: "15px",
-											fontSize: 18,
-										}}
-										onChange={searchHandler}
-									/>
-								</Form>
+				<MainScreen>
+					<div className="dashboard-container">
+						<h1 className="dashboard-header">Welcome Back, {adminInfo?.name}</h1>
+						
+						<div className="d-flex justify-content-between align-items-center">
+							<Button variant="success" href="/admin">
+								Back to Dashboard
+							</Button>
+							<div className="search-container">
+								<input
+									type="text"
+									placeholder="Search customers..."
+									className="search-box"
+									onChange={searchHandler}
+								/>
 							</div>
-						</Col>
-					</Row>
-					<br></br>
+						</div>
 
-					<Button variant="success" href="/admin">
-						Back to Dashboard
-					</Button>
+						{error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+						{errorDelete && <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>}
+						{loading && <Loading />}
 
-					<br></br>
-					{error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-					{errorDelete && <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>}
-					{loading && <Loading />}
-					{loadingDelete && <Loading />}
-					<br></br>
-					<div className="listContainer">
-						<Accordion allowZeroExpanded>
-							{customers &&
-								customers
-									.filter(
-										(filteredCustomers) =>
-											filteredCustomers.name.toLowerCase().includes(search.toLowerCase()) ||
-											filteredCustomers.email.includes(search)
-									)
-									.reverse()
-									.map((customerList) => (
-										<AccordionItem key={customerList._id} className="listContainer">
-											<Card
-												style={{
-													margin: 10,
-													borderRadius: 25,
-													borderWidth: 1.0,
-													borderColor: "rgb(0,0,0,0.5)",
-													marginTop: 20,
-													paddingInline: 10,
-													background: "rgb(235, 235, 235)",
-												}}
-											>
-												<AccordionItemHeading>
-													<AccordionItemButton>
-														<Card.Header
-															style={{
-																display: "flex",
-																paddingInline: 10,
-																borderRadius: 25,
-																marginTop: 10,
-																marginBottom: 10,
-																borderColor: "black",
-																background: "#76BA99",
-															}}
-														>
-															<span
-																style={{
-																	color: "black",
-																	textDecoration: "none",
-																	flex: 1,
-																	cursor: "pointer",
-																	alignSelf: "center",
-																	fontSize: 18,
-																}}
-															>
-																<label
-																	className="nic"
-																	style={{
-																		paddingInline: 20,
-																		marginTop: 10,
-																		fontSize: 18,
-																	}}
-																>
-																	Customer Email : &emsp;
-																	{customerList.email}{" "}
-																</label>{" "}
-																<br></br>
-																<label className="name" style={{ paddingInline: 20, fontSize: 18 }}>
-																	Customer Name : &emsp;
-																	{customerList.name}
-																</label>{" "}
-															</span>
-															<div>
-																<Button
-																	style={{ marginTop: 20, fontSize: 15 }}
-																	href={`/admin-customer-edit/${customerList._id}`}
-																>
-																	Edit
-																</Button>
-															</div>
-															&emsp;
-															<div>
-																<Button
-																	style={{ marginTop: 20, fontSize: 15 }}
-																	variant="danger"
-																	className="mx-2"
-																	onClick={() => deleteHandler(customerList._id)}
-																>
-																	Delete
-																</Button>
-															</div>
-														</Card.Header>
-													</AccordionItemButton>
-												</AccordionItemHeading>
-												<AccordionItemPanel>
-													<Card.Body>
-														<Row>
-															<Col md={6}>
-																<h5>Name - {customerList.name}</h5>
-																<h5>Telephone - {customerList.telephone}</h5>
-																<h5>Address - {customerList.address}</h5>
-																<h5>Email - {customerList.email}</h5>
-																<br></br>
-															</Col>
-															<Col
-																style={{
-																	display: "flex",
-																	alignItems: "center",
-																	width: "500px",
-																	justifyContent: "center",
-																}}
-															>
-																<img
-																	style={{
-																		width: "50%",
-																		height: "100%",
-																	}}
-																	src={customerList.pic}
-																	alt={customerList.name}
-																	className="profilePic"
-																/>
-															</Col>
-														</Row>
-														<br></br>
-														<blockquote className="blockquote mb-0">
-															<Card.Footer
-																className="text-muted"
-																style={{
-																	borderRadius: 20,
-																	background: "white",
-																}}
-															>
-																Registered Date - <cite title="Source Title"> {customerList.regDate}</cite>
-															</Card.Footer>
-														</blockquote>
-													</Card.Body>
-												</AccordionItemPanel>
-											</Card>
-										</AccordionItem>
+						<div className="dashboard-table">
+							<Table hover responsive>
+								<thead className="table-header">
+									<tr>
+										<th>Name</th>
+										<th>Email</th>
+										<th>Phone</th>
+										<th>Address</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									{customers?.filter(customer => 
+										customer.name.toLowerCase().includes(search.toLowerCase()) ||
+										customer.email.includes(search)
+									).map((customer) => (
+										<tr key={customer._id} className="table-row">
+											<td>{customer.name}</td>
+											<td>{customer.email}</td>
+											<td>{customer.telephone}</td>
+											<td>{customer.address}</td>
+											<td>
+												<div className="action-buttons">
+													<Button
+														className="btn-view"
+														onClick={() => viewDetails(customer)}
+													>
+														View
+													</Button>
+													<Button
+														className="btn-edit"
+														href={`/admin-customer-edit/${customer._id}`}
+													>
+														Edit
+													</Button>
+													<Button
+														className="btn-delete"
+														onClick={() => deleteHandler(customer._id)}
+													>
+														Delete
+													</Button>
+												</div>
+											</td>
+										</tr>
 									))}
-						</Accordion>
+								</tbody>
+							</Table>
+						</div>
 					</div>
-
-					<br></br>
 				</MainScreen>
 			</div>
 		);

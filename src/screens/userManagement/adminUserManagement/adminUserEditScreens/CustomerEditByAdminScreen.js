@@ -87,169 +87,124 @@ const CustomerEditByAdminScreen = ({ match }) => {
 	if (adminInfo) {
 		return (
 			<div className="adminCustomerEditBg">
-				<br></br>
-				<MainScreen title="EDIT - CUSTOMER">
-					<Button
-						variant="success"
-						style={{
-							float: "left",
-							marginTop: 5,
-							fontSize: 15,
-						}}
-						href="/admin-customers"
-					>
-						{" "}
-						Back to customers List
+				<MainScreen>
+					<Button className="btn-back" href="/admin-customers">
+						Back to Customers List
 					</Button>
-					<br></br>
 
-					<br></br>
-					<Card
-						className="profileCont"
-						style={{
-							borderRadius: 45,
-							borderWidth: 2.0,
-							marginTop: 20,
-							paddingInline: 10,
-							paddingLeft: 25,
-							paddingRight: 25,
-							background: "rgba(231, 238, 238, 0.8)",
-						}}
-					>
-						<div className="loginContainer">
-							<br></br>
-							<div>
-								{error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-								{message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
-								{loading && <Loading />}
-							</div>
-							<br></br>
-							<Row className="customerProfileContainer">
-								<Col md={6}>
-									<Form onSubmit={submitHandler}>
-										<Form.Group controlId="customerName">
-											<Form.Label>Name</Form.Label>
+					<div className="edit-container">
+						<h2 className="edit-header">Edit Customer Profile</h2>
+
+						{error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+						{message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
+						{loading && <Loading />}
+
+						<Row>
+							<Col md={8}>
+								<Form onSubmit={submitHandler}>
+									<Row>
+										<Col md={6}>
+											<Form.Group className="mb-3">
+												<Form.Label>Name</Form.Label>
+												<Form.Control
+													type="name"
+													value={name}
+													placeholder="Enter name"
+													onChange={(e) => setName(e.target.value)}
+												/>
+											</Form.Group>
+										</Col>
+										<Col md={6}>
+											<Form.Group className="mb-3">
+												<Form.Label>Email</Form.Label>
+												<Form.Control
+													type="email"
+													value={email}
+													placeholder="Enter email"
+													onChange={(e) => setEmail(e.target.value)}
+												/>
+											</Form.Group>
+										</Col>
+									</Row>
+
+									<Row>
+										<Col md={6}>
+											<Form.Group className="mb-3">
+												<Form.Label>Telephone</Form.Label>
+												<Form.Control
+													type="text"
+													value={telephone}
+													placeholder="Enter Telephone Number"
+													onChange={(e) => setTelephone(e.target.value)}
+													maxLength={10}
+												/>
+											</Form.Group>
+										</Col>
+										<Col md={6}>
+											<Form.Group className="mb-3">
+												<Form.Label>Address</Form.Label>
+												<Form.Control
+													type="textArea"
+													value={address}
+													placeholder="Enter Address"
+													onChange={(e) => setAddress(e.target.value)}
+												/>
+											</Form.Group>
+										</Col>
+									</Row>
+
+									<Form.Group className="mb-3">
+										<Form.Label>Password</Form.Label>
+										<Form.Control
+											type="password"
+											value={password}
+											placeholder="Password"
+											onChange={(e) => setPassword(e.target.value)}
+										/>
+									</Form.Group>
+
+									<Form.Group className="mb-3">
+										<Form.Label>Confirm Password</Form.Label>
+										<Form.Control
+											type="password"
+											value={confirmpassword}
+											placeholder="Confirm Password"
+											onChange={(e) => setConfirmPassword(e.target.value)}
+										/>
+									</Form.Group>
+
+									<Form.Group className="mb-3">
+										<Form.Label>Registration Date</Form.Label>
+										<Form.Control type="text" value={regDate} readOnly />
+									</Form.Group>
+
+									<Button className="btn-update" type="submit">
+										Update Profile
+									</Button>
+								</Form>
+							</Col>
+
+							<Col md={4}>
+								<div className="profile-image-container">
+									<div className="profile-pic-wrapper">
+										<img src={pic} alt={name} className="profile-pic" />
+									</div>
+									<div className="upload-section">
+										<Form.Group>
+											<Form.Label>Update Profile Picture</Form.Label>
+											{picMessage && <ErrorMessage variant="danger">{picMessage}</ErrorMessage>}
 											<Form.Control
-												type="name"
-												value={name}
-												placeholder="Enter name"
-												onChange={(e) => setName(e.target.value)}
-												required
-											/>
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="customerFormBasicTelephone">
-											<Form.Label>Telephone</Form.Label>
-											<Form.Control
-												type="text"
-												value={telephone}
-												placeholder="Enter Telephone Number"
-												onChange={(e) => setTelephone(e.target.value)}
-												required
-												maxLength={10}
-											/>
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="customerFormBasicAddress">
-											<Form.Label>Address</Form.Label>
-											<Form.Control
-												type="textArea"
-												value={address}
-												placeholder="Enter Address"
-												onChange={(e) => setAddress(e.target.value)}
-												required
-											/>
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="doctorFormBasicEmail">
-											<Form.Label>Email</Form.Label>
-											<Form.Control
-												type="email"
-												value={email}
-												placeholder="Enter Email Address"
-												onChange={(e) => setEmail(e.target.value)}
-												required
-											/>
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="formBasicPassword">
-											<Form.Label>Password</Form.Label>
-											<Form.Control
-												type="password"
-												value={password}
-												placeholder="Password"
-												onChange={(e) => setPassword(e.target.value)}
-											/>
-										</Form.Group>
-										<br></br>
-										<Form.Group controlId="confirmPassword">
-											<Form.Label>Confirm Password</Form.Label>
-											<Form.Control
-												type="password"
-												value={confirmpassword}
-												placeholder="Confirm Password"
-												onChange={(e) => setConfirmPassword(e.target.value)}
-											/>
-										</Form.Group>
-										<br></br>
-										{picMessage && <ErrorMessage variant="danger">{picMessage}</ErrorMessage>}
-										<Form.Group controlId="pic">
-											<Form.Label>Profile Picture</Form.Label>
-											&emsp;
-											<input
 												type="file"
 												accept="image/*"
-												id="customer-pic"
 												onChange={(e) => postDetails(e.target.files[0])}
 											/>
 										</Form.Group>
-										<br></br>
-										<Form.Group controlId="customerRegDate">
-											<Form.Label>Registration Date</Form.Label>
-											<Form.Control type="text" value={regDate} onChange={(e) => setRegDate(e.target.value)} readOnly />
-										</Form.Group>
-										<br></br>
-										<Button
-											variant="primary"
-											type="submit"
-											style={{
-												fontSize: 15,
-												marginTop: 10,
-											}}
-										>
-											Update
-										</Button>
-										&emsp;
-									</Form>
-								</Col>
-								<Col
-									style={{
-										display: "flex",
-										alignItems: "center",
-										justifyContent: "center",
-									}}
-								>
-									<img
-										src={pic}
-										alt={name}
-										className="profilePic"
-										style={{
-											boxShadow: "7px 7px 20px ",
-											borderColor: "black",
-											borderRadius: 250,
-											background: "white",
-											width: "300px",
-											height: "300px",
-										}}
-									/>
-								</Col>
-							</Row>
-							<br></br>
-						</div>
-					</Card>
-					<br></br>
+									</div>
+								</div>
+							</Col>
+						</Row>
+					</div>
 				</MainScreen>
-				<br></br>
 			</div>
 		);
 	} else {
