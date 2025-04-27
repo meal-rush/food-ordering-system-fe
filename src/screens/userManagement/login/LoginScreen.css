@@ -1,4 +1,4 @@
-.loginContainer {
+/* .loginContainer {
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -8,4 +8,174 @@
 	background: url("https://res.cloudinary.com/dfmnpw0yp/image/upload/v1681751076/assets/kjfjbmjfquuyrvdhyqeu.jpg");
 	background-position: center;
 	background-size: cover;
+} */
+
+.login-page {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+	padding: 2rem 0;
+  }
+  
+  .login-card {
+	border: none;
+	border-radius: 15px;
+	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	background: #ffffff;
+	padding: 2rem;
+  }
+  
+  .login-logo {
+	width: 80px;
+	height: 80px;
+	margin-bottom: 1.5rem;
+  }
+  
+  .login-title {
+	font-size: 1.75rem;
+	font-weight: 700;
+	color: #333;
+	margin-bottom: 0.5rem;
+  }
+  
+  .login-subtitle {
+	color: #6c757d;
+	margin-bottom: 1.5rem;
+  }
+  
+  .form-group {
+	margin-bottom: 1.5rem;
+  }
+  
+  .input-icon-wrapper {
+	position: relative;
+  }
+  
+  .input-icon {
+	position: absolute;
+	top: 50%;
+	left: 15px;
+	transform: translateY(-50%);
+	color: #adb5bd;
+	font-size: 1rem;
+  }
+  
+  .input-with-icon {
+	padding-left: 55px;
+	height: 50px;
+	border-radius: 25px;
+	border: 1px solid #ced4da;
+	transition: all 0.3s ease;
+  }
+  
+  .input-with-icon:focus {
+	border-color: #80bdff;
+	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+
+  .input-with-icon::placeholder {
+    padding-left: 30px;
 }
+  
+  .remember-me {
+	font-size: 0.9rem;
+  }
+  
+  .forgot-password {
+	font-size: 0.9rem;
+	color: #007bff;
+	text-decoration: none;
+	transition: color 0.3s ease;
+  }
+  
+  .forgot-password:hover {
+	color: #0056b3;
+	text-decoration: underline;
+  }
+  
+  .login-btn {
+	width: 100%;
+	height: 50px;
+	border-radius: 25px;
+	font-weight: 600;
+	font-size: 1rem;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s ease;
+  }
+  
+  .customer-login-btn {
+	background-color: #2196f3;
+	border-color: #2196f3;
+  }
+  
+  .customer-login-btn:hover {
+	background-color: #1976d2;
+	border-color: #1976d2;
+  }
+  
+  .vendor-login-btn {
+	background-color: #4caf50;
+	border-color: #4caf50;
+  }
+  
+  .vendor-login-btn:hover {
+	background-color: #388e3c;
+	border-color: #388e3c;
+  }
+  
+  .admin-login-btn {
+	background-color: #f44336;
+	border-color: #f44336;
+  }
+  
+  .admin-login-btn:hover {
+	background-color: #d32f2f;
+	border-color: #d32f2f;
+  }
+  
+  .signup-link {
+	color: #007bff;
+	font-weight: 600;
+	text-decoration: none;
+	transition: color 0.3s ease;
+  }
+  
+  .signup-link:hover {
+	color: #0056b3;
+	text-decoration: underline;
+  }
+  
+  .back-link a {
+	display: inline-flex;
+	align-items: center;
+	font-size: 0.9rem;
+	color: #6c757d;
+	text-decoration: none;
+	transition: all 0.3s ease;
+  }
+  
+  .back-link a:hover {
+	color: #495057;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+	.login-card {
+	  padding: 1.5rem;
+	}
+	
+	.login-logo {
+	  width: 60px;
+	  height: 60px;
+	}
+	
+	.login-title {
+	  font-size: 1.5rem;
+	}
+  }

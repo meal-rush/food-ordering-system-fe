@@ -114,84 +114,223 @@ export const productsListForAdmin = () => async (dispatch, getState) => {
 };
 
 // create a product action
-export const createProduct =
-	(
-		vendorEmail,
-		title,
-		category,
-		productBrand,
-		productCode,
-		description,
-		picURL,
-		price,
-		ingredients,
-		usage,
-		warnings,
-		discountNote,
-		discountPrice,
-		quantity
-	) =>
-	async (dispatch, getState) => {
-		try {
-			dispatch({
-				type: PRODUCTS_CREATE_REQUEST,
-			});
+// export const createProduct =
+// 	(
+// 		vendorEmail,
+// 		title,
+// 		category,
+// 		productBrand,
+// 		productCode,
+// 		description,
+// 		picURL,
+// 		price,
+// 		ingredients,
+// 		usage,
+// 		warnings,
+// 		discountNote,
+// 		discountPrice,
+// 		quantity
+// 	) =>
+// 	async (dispatch, getState) => {
+// 		try {
+// 			dispatch({
+// 				type: PRODUCTS_CREATE_REQUEST,
+// 			});
 
-			const {
-				vendor_Login: { vendorInfo },
-			} = getState();
+// 			const {
+// 				vendor_Login: { vendorInfo },
+// 			} = getState();
 
-			const config = {
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${vendorInfo.token}`,
-				},
-			};
+// 			const config = {
+// 				headers: {
+// 					"Content-Type": "application/json",
+// 					Authorization: `Bearer ${vendorInfo.token}`,
+// 				},
+// 			};
 
-			//call the backend route
-			const { data } = await axios.post(
-				`${API_ENDPOINT}/items/products/vendor/product/add`,
-				{
-					vendorEmail,
-					title,
-					category,
-					productBrand,
-					productCode,
-					description,
-					picURL,
-					price,
-					ingredients,
-					usage,
-					warnings,
-					discountNote,
-					discountPrice,
-					quantity,
-				},
-				config
-			);
+// 			//call the backend route
+// 			const { data } = await axios.post(
+// 				`${API_ENDPOINT}/items/products/vendor/product/add`,
+// 				{
+// 					vendorEmail,
+// 					title,
+// 					category,
+// 					productBrand,
+// 					productCode,
+// 					description,
+// 					picURL,
+// 					price,
+// 					ingredients,
+// 					usage,
+// 					warnings,
+// 					discountNote,
+// 					discountPrice,
+// 					quantity,
+// 				},
+// 				config
+// 			);
 
-			dispatch({
-				type: PRODUCTS_CREATE_SUCCESS,
-				payload: data,
-			});
-			swal({
-				title: "Success !!!",
-				text: "Product Creation Successful.",
-				icon: "success",
-				timer: 2000,
-				button: false,
-			});
-			setTimeout(function () {
-				window.location.href = "/vendor-products";
-			}, 2000);
-		} catch (error) {
-			const message = error.response && error.response.data.message ? error.response.data.message : error.message;
-			dispatch({
-				type: PRODUCTS_CREATE_FAIL,
-				payload: message,
-			});
-		}
-	};
+// 			dispatch({
+// 				type: PRODUCTS_CREATE_SUCCESS,
+// 				payload: data,
+// 			});
+// 			swal({
+// 				title: "Success !!!",
+// 				text: "Product Creation Successful.",
+// 				icon: "success",
+// 				timer: 2000,
+// 				button: false,
+// 			});
+// 			setTimeout(function () {
+// 				window.location.href = "/vendor-products";
+// 			}, 2000);
+// 		} catch (error) {
+// 			const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+// 			dispatch({
+// 				type: PRODUCTS_CREATE_FAIL,
+// 				payload: message,
+// 			});
+// 		}
+// 	};
+
+// Create a product action with support for both old and new fields
+export const createProduct = (productData) => async (dispatch, getState) => {
+	try {
+		dispatch({
+			type: PRODUCTS_CREATE_REQUEST,
+		});
+
+		const {
+			vendor_Login: { vendorInfo },
+		} = getState();
+
+		const config = {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${vendorInfo.token}`,
+			},
+		};
+
+		// Handling both old and new field names
+		const payload = {
+			vendorEmail: productData.vendorEmail,
+			title: productData.itemName || productData.title,
+			category: productData.category,
+			productBrand: productData.productBrand || "Restaurant Brand", // Default if using new UI
+			productCode: productData.productCode || `ITEM-${Date.now()}`, // Generate code if using new UI
+			description: productData.description,
+			picURL: productData.picURL,
+			price: productData.price,
+			ingredients: productData.ingredients || productData.customizations || "Not specified", // Map customizations to ingredients
+			usage: productData.usage || "Consume fresh", // Default if using new UI
+			warnings: productData.warnings || "No specific warnings", // Default if using new UI
+			discountNote: productData.discountNote || "No current discounts", // Default if using new UI
+			discountPrice: productData.discountPrice || productData.price, // Default to regular price if no discount
+			quantity: productData.quantity || 100, // Default quantity if using new UI
+			// New fields
+			preparationTime: productData.preparationTime,
+			availability: productData.availability,
+			customizations: productData.customizations,
+		};
+
+		//call the backend route
+		const { data } = await axios.post(`${API_ENDPOINT}/items/products/vendor/product/add`, payload, config);
+
+		dispatch({
+			type: PRODUCTS_CREATE_SUCCESS,
+			payload: data,
+		});
+
+		swal({
+			title: "Success !!!",
+			text: "Menu Item Creation Successful.",
+			icon: "success",
+			timer: 2000,
+			button: false,
+		});
+
+		setTimeout(function () {
+			window.location.href = "/vendor-products";
+		}, 2000);
+	} catch (error) {
+		const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+		dispatch({
+			type: PRODUCTS_CREATE_FAIL,
+			payload: message,
+		});
+	}
+};
+
+// upadate product by vendor action
+// export const updateProductByVendor =
+// 	(
+// 		id,
+// 		vendorEmail,
+// 		title,
+// 		category,
+// 		productBrand,
+// 		productCode,
+// 		description,
+// 		picURL,
+// 		price,
+// 		ingredients,
+// 		usage,
+// 		warnings,
+// 		discountNote,
+// 		discountPrice,
+// 		quantity
+// 	) =>
+// 	async (dispatch, getState) => {
+// 		try {
+// 			dispatch({
+// 				type: PRODUCTS_UPDATE_BY_VENDOR_REQUEST,
+// 			});
+
+// 			const {
+// 				vendor_Login: { vendorInfo },
+// 			} = getState();
+
+// 			const config = {
+// 				headers: {
+// 					"Content-Type": "application/json",
+// 					Authorization: `Bearer ${vendorInfo.token}`,
+// 				},
+// 			};
+
+// 			//call the backend route
+// 			const { data } = await axios.put(
+// 				`${API_ENDPOINT}/items/products/vendor/product/get/${id}`,
+// 				{
+// 					vendorEmail,
+// 					title,
+// 					category,
+// 					productBrand,
+// 					productCode,
+// 					description,
+// 					picURL,
+// 					price,
+// 					ingredients,
+// 					usage,
+// 					warnings,
+// 					discountNote,
+// 					discountPrice,
+// 					quantity,
+// 				},
+// 				config
+// 			);
+
+// 			dispatch({
+// 				type: PRODUCTS_UPDATE_BY_VENDOR_SUCCESS,
+// 				payload: data,
+// 			});
+// 		} catch (error) {
+// 			const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+// 			dispatch({
+// 				type: PRODUCTS_UPDATE_BY_VENDOR_FAIL,
+// 				payload: message,
+// 			});
+// 		}
+// 	};
 
 // upadate product by vendor action
 export const updateProductByVendor =
@@ -210,7 +349,10 @@ export const updateProductByVendor =
 		warnings,
 		discountNote,
 		discountPrice,
-		quantity
+		quantity,
+		preparationTime,
+		availability,
+		customizations
 	) =>
 	async (dispatch, getState) => {
 		try {
@@ -247,6 +389,10 @@ export const updateProductByVendor =
 					discountNote,
 					discountPrice,
 					quantity,
+					// Include the new fields
+					preparationTime,
+					availability,
+					customizations,
 				},
 				config
 			);

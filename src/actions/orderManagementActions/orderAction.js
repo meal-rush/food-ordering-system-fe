@@ -215,3 +215,79 @@ export const customerUpdateOrderStatusAction = (id, status) => async (dispatch, 
 		});
 	}
 };
+
+// Action for the vendor to get all their orders
+export const vendorOrders = () => async (dispatch, getState) => {
+	try {
+	  dispatch({
+		type: ORDER_DETAILS_REQUEST,
+	  });
+  
+	  const {
+		vendor_Login: { vendorInfo },
+	  } = getState();
+  
+	  const config = {
+		headers: {
+		  "Content-Type": "application/json",
+		  Authorization: `Bearer ${vendorInfo.token}`,
+		},
+	  };
+  
+	  const { data } = await axios.get(`${API_ENDPOINT}/orders/order/get-vendor-orders/${vendorInfo._id}`, config);
+  
+	  dispatch({
+		type: ORDER_DETAILS_SUCCESS,
+		payload: data,
+	  });
+	} catch (error) {
+	  const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+	  dispatch({
+		type: ORDER_DETAILS_FAIL,
+		payload: message,
+	  });
+	}
+  };
+  
+  // Action for the vendor to update order status
+  export const vendorUpdateOrderStatusAction = (id, status) => async (dispatch, getState) => {
+	try {
+	  dispatch({
+		type: UPDATE_ORDER_REQUEST,
+	  });
+  
+	  const {
+		vendor_Login: { vendorInfo },
+	  } = getState();
+  
+	  const config = {
+		headers: {
+		  "Content-Type": "application/json",
+		  Authorization: `Bearer ${vendorInfo.token}`,
+		},
+	  };
+	  const { data } = await axios.put(`${API_ENDPOINT}/orders/order/order-vendor/${id}`, { status }, config);
+  
+	  dispatch({
+		type: UPDATE_ORDER_SUCCESS,
+		payload: data,
+	  });
+	  swal({
+		title: "Success !!!",
+		text: "Order status has been updated",
+		icon: "success",
+		timer: 2000,
+		button: false,
+	  });
+  
+	  setTimeout(function () {
+		window.location.href = "/vendor-orders";
+	  }, 2000);
+	} catch (error) {
+	  const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+	  dispatch({
+		type: UPDATE_ORDER_FAIL,
+		payload: message,
+	  });
+	}
+  };
