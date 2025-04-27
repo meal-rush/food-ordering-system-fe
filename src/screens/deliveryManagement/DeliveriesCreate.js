@@ -86,166 +86,148 @@ export default function DeliveriesCreate({ match, history }) {
 
 	if (customerInfo) {
 		return (
-			<div className="DeliveriesBackgroundCreate">
-				<MainScreen title={"Enter Your Delivery Preferences"}>
+			<div className="DeliveriesBackgroundCreate" style={{ backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
+				<MainScreen title="Delivery Preferences">
 					<Button
-						variant="success"
-						style={{
-							marginLeft: 10,
-							marginBottom: 6,
-							float: "left",
-							fontSize: 15,
-						}}
-						size="lg"
+						variant="primary"
+						className="back-button"
 						href={`/customer-deliveries/${customerInfo._id}`}
-					>
-						Back to the Deliveries List
-					</Button>
-					<br></br>
-					<br></br>
-					<br></br>
-					<Card
 						style={{
-							margin: 50,
-							marginLeft: "10%",
-							marginRight: "0%",
-							width: "80%",
-							borderRadius: 45,
-							borderWidth: 2.0,
-							marginTop: 20,
-							paddingInline: 10,
-							background: "rgba(231, 238, 238, 0.9)",
+							margin: '20px',
+							backgroundColor: '#088395',
+							border: 'none',
+							borderRadius: '8px',
+							padding: '10px 20px'
 						}}
 					>
-						<Card.Body>
-							<br></br>
+						← Back to Deliveries
+					</Button>
 
+					<Card className="delivery-form-card">
+						<Card.Body>
 							<Form onSubmit={submitHandler} ref={formDelivery}>
 								{error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-								<Form.Group controlId="">
-									<Form.Label>Order Id</Form.Label>
-									<Form.Control
-										style={{
-											height: 40,
-											fontSize: 18,
-										}}
-										type="orderId"
-										value={order}
-										readOnly
-									/>
-								</Form.Group>
-								<br></br>
-								<Form.Group controlId="Name">
-									<Form.Label>Name</Form.Label>
-									<Form.Control value={customerInfo.name} placeholder="Enter Your Name" readOnly />
-								</Form.Group>
-								<br></br>
-								<Form.Group controlId="email">
-									<Form.Label>Email</Form.Label>
-									<Form.Control
-										type="email"
-										value={customerInfo.email}
-										placeholder="Enter  Your Email"
-										name="useremail"
-										readOnly
-									/>
-								</Form.Group>
-								<br></br>
-								<Form.Group controlId="email">
-									<Form.Label>Phone Number</Form.Label>
-									<Form.Control
-										type="email"
-										value={customerInfo.telephone}
-										placeholder="Enter  Your Phone Number"
-										readOnly
-									/>
-								</Form.Group>
-								<br></br>
-								<Form.Group controlId="deliveryServiceName">
-									<Form.Label>Delivery Service Name</Form.Label>
-									<select
-										className="form-control"
-										id="deleveryServiceName"
-										value={deliveryServiceName}
-										onChange={(e) => setDeliveryServiceName(e.target.value)}
-										name="servicename"
-										required
-									>
-										<option>Select Your Preffered Delivery Partner</option>
-										<option value="DHL">DHL</option>
-										<option value="Eco Air">Eco Air</option>
-										<option value="Pick Me">Pick Me</option>
-										<option value="Uber">Uber</option>
-									</select>
-								</Form.Group>
-								<br></br>
-								<Form.Group controlId="deliveryServiceEmail">
-									<Form.Label> Delivery Service Email</Form.Label>
-									<select
-										className="form-control"
-										id="deleveryServiceMail"
-										value={deliveryServiceEmail}
-										onChange={(e) => setDeliveryServiceEmail(e.target.value)}
-										required
-									>
-										<option>Select Delivery Partner Mail</option>
-										<option value="dhlshipping@co.lk">DHL - dhlshipping@co.lk</option>
-										<option value="ecoshipping@co.lk">Eco Air - ecoshipping@co.lk</option>
-										<option value="pickmedrops@pickme.com">Pick Me - pickmedrops@pickme.com</option>
-										<option value="uberconnect@uberblog.com">Uber - uberconnect@uberblog.com</option>
-									</select>
-								</Form.Group>
-								<br></br>
-								<Form.Group controlId="deliveryServicePhone">
-									<Form.Label> Delivery Service Phone</Form.Label>
-									<select
-										className="form-control"
-										id="deleveryServiceTelephone"
-										value={deliveryServicePhone}
-										onChange={(e) => setDeliveryServicePhone(e.target.value)}
-										name="servicemobile"
-										required
-									>
-										<option>Select Delivery Partner Phone</option>
-										<option value="0777896532">DHL - 0777896532</option>
-										<option value="0118956556">Eco Air - 0118956556</option>
-										<option value="0115896236">Pick Me - 0115896236</option>
-										<option value="0775689565">Uber - 0775689565</option>
-									</select>
-								</Form.Group>
-								<br></br>
-								<Form.Group controlId="status">
-									<Form.Label>Status</Form.Label>
-									<select
-										className="form-control"
-										id="deleveryStatus"
-										value={deliveryStatus}
-										onChange={(e) => setDeliveryStatus(e.target.value)}
-										required
-									>
-										<option value="Processing">Processing</option>
-									</select>
-								</Form.Group>
+								
+								<div className="form-grid">
+									<Form.Group>
+										<Form.Label>Order ID</Form.Label>
+										<Form.Control value={order} readOnly className="modern-input" />
+									</Form.Group>
 
-								<br></br>
-								<br></br>
+									<Form.Group>
+										<Form.Label>Name</Form.Label>
+										<Form.Control value={customerInfo.name} readOnly className="modern-input" />
+									</Form.Group>
 
-								{loading && <Loading size={50} />}
+									<Form.Group>
+										<Form.Label>Delivery Service</Form.Label>
+										<Form.Select 
+											value={deliveryServiceName}
+											onChange={(e) => setDeliveryServiceName(e.target.value)}
+											className="modern-select"
+											required
+										>
+											<option>Select Delivery Partner</option>
+											<option value="DHL">DHL Express</option>
+											<option value="Eco Air">Eco Air Delivery</option>
+											<option value="Pick Me">Pick Me</option>
+											<option value="Uber">Uber Connect</option>
+										</Form.Select>
+									</Form.Group>
 
-								<Button type="submit" variant="success">
-									Submit
-								</Button>
+									<Form.Group>
+										<Form.Label>Delivery Service Email</Form.Label>
+										<Form.Select
+											value={deliveryServiceEmail}
+											onChange={(e) => setDeliveryServiceEmail(e.target.value)}
+											className="modern-select"
+											required
+										>
+											<option>Select Delivery Partner Mail</option>
+											<option value="dhlshipping@co.lk">DHL - dhlshipping@co.lk</option>
+											<option value="ecoshipping@co.lk">Eco Air - ecoshipping@co.lk</option>
+											<option value="pickmedrops@pickme.com">Pick Me - pickmedrops@pickme.com</option>
+											<option value="uberconnect@uberblog.com">Uber - uberconnect@uberblog.com</option>
+										</Form.Select>
+									</Form.Group>
 
-								<Button className="mx-2" onClick={resetHandler} variant="danger">
-									Reset
-								</Button>
+									<Form.Group>
+										<Form.Label>Delivery Service Phone</Form.Label>
+										<Form.Select
+											value={deliveryServicePhone}
+											onChange={(e) => setDeliveryServicePhone(e.target.value)}
+											className="modern-select"
+											required
+										>
+											<option>Select Delivery Partner Phone</option>
+											<option value="0777896532">DHL - 0777896532</option>
+											<option value="0118956556">Eco Air - 0118956556</option>
+											<option value="0115896236">Pick Me - 0115896236</option>
+											<option value="0775689565">Uber - 0775689565</option>
+										</Form.Select>
+									</Form.Group>
+
+									<Form.Group>
+										<Form.Label>Status</Form.Label>
+										<Form.Select
+											value={deliveryStatus}
+											onChange={(e) => setDeliveryStatus(e.target.value)}
+											className="modern-select"
+											required
+										>
+											<option value="Processing">Processing</option>
+										</Form.Select>
+									</Form.Group>
+								</div>
+
+								<div className="button-group">
+									<Button type="submit" className="submit-btn">
+										Submit
+									</Button>
+									<Button onClick={resetHandler} variant="outline-danger">
+										Reset
+									</Button>
+								</div>
 							</Form>
-							<br></br>
 						</Card.Body>
 					</Card>
-					<br></br>
-					<br></br>
 				</MainScreen>
+				<style jsx>{`
+					.delivery-form-card {
+						margin: 20px;
+						border-radius: 15px;
+						border: none;
+						box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+						background: white;
+					}
+					.form-grid {
+						display: grid;
+						grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+						gap: 20px;
+						padding: 20px;
+					}
+					.modern-input, .modern-select {
+						height: 45px;
+						border-radius: 8px;
+						border: 1px solid #ddd;
+						padding: 0 15px;
+						transition: all 0.3s;
+					}
+					.modern-input:focus, .modern-select:focus {
+						border-color: #088395;
+						box-shadow: 0 0 0 3px rgba(8,131,149,0.1);
+					}
+					.button-group {
+						display: flex;
+						gap: 10px;
+						padding: 20px;
+					}
+					.submit-btn {
+						background: #088395;
+						border: none;
+						padding: 10px 30px;
+					}
+				`}</style>
 			</div>
 		);
 	} else {
