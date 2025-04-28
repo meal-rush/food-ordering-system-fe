@@ -89,7 +89,8 @@
 }
 
 .sort-dropdown,
-.category-filter {
+.category-filter,
+.offer-filter {
 	width: 100%;
 	height: 45px;
 	display: flex;
@@ -209,6 +210,26 @@
 .page-item.active .page-link {
 	background-color: #28a745;
 	border-color: #28a745;
+}
+
+/* Price display with discounts */
+.original-price {
+	text-decoration: line-through;
+	color: #6c757d;
+	font-size: 0.9rem;
+}
+
+.discounted-price {
+	color: #dc3545;
+	font-weight: 600;
+}
+
+.discount-note {
+	background-color: #fff3cd;
+	color: #856404;
+	padding: 2px 6px;
+	border-radius: 4px;
+	font-size: 0.85rem;
 }
 
 /* Media queries for responsiveness */
