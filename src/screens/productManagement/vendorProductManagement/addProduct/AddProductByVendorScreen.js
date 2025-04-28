@@ -16,6 +16,7 @@ function AddProductByVendorScreen() {
 		"https://res.cloudinary.com/dfmnpw0yp/image/upload/v1679235307/assets/tsuh9f6v1reihgqxwxrz.ico"
 	);
 	const [price, setPrice] = useState("");
+	const [discount, setDiscount] = useState(""); // Added discount state
 	const [preparationTime, setPreparationTime] = useState("");
 	const [availability, setAvailability] = useState(true);
 	const [customizations, setCustomizations] = useState("");
@@ -51,11 +52,19 @@ function AddProductByVendorScreen() {
 		"Other",
 	];
 
+	// Calculate the discounted price based on price and discount percentage
+	const calculateDiscountedPrice = (originalPrice, discountPercentage) => {
+		if (!originalPrice || !discountPercentage) return originalPrice;
+		const discountAmount = (originalPrice * discountPercentage) / 100;
+		return originalPrice - discountAmount;
+	};
+
 	const resetHandler = () => {
 		setItemName("");
 		setCategory("");
 		setDescription("");
 		setPrice("");
+		setDiscount(""); // Reset discount field
 		setPreparationTime("");
 		setAvailability(true);
 		setCustomizations("");
@@ -70,51 +79,11 @@ function AddProductByVendorScreen() {
 			"Our signature spicy chicken burger with crispy fried chicken fillet, fresh lettuce, tomato, and special house sauce served in a toasted brioche bun."
 		);
 		setPrice(750);
+		setDiscount(15); // Set a demo discount percentage
 		setPreparationTime(15);
 		setAvailability(true);
 		setCustomizations("Extra cheese (+100 LKR), Bacon (+150 LKR), Extra spicy sauce (+50 LKR)");
 	};
-
-	// const submitHandler = (e) => {
-	// 	e.preventDefault();
-
-	// 	if (!vendorEmail || !itemName || !category || !description || !picURL || !price || !preparationTime) {
-	// 		setMessage("Please fill all required fields");
-	// 		return;
-	// 	}
-
-	// 	// Replace this with your actual create menu item action
-	// 	console.log("Menu item submitted:", {
-	// 		vendorEmail,
-	// 		itemName,
-	// 		category,
-	// 		description,
-	// 		picURL,
-	// 		price,
-	// 		preparationTime,
-	// 		availability,
-	// 		customizations,
-	// 	});
-
-	// 	// Uncomment and modify this when you have the action ready
-	// 	/*
-	// 	dispatch(
-	// 		createMenuItem(
-	// 			vendorEmail,
-	// 			itemName,
-	// 			category,
-	// 			description,
-	// 			picURL,
-	// 			price,
-	// 			preparationTime,
-	// 			availability,
-	// 			customizations
-	// 		)
-	// 	);
-	// 	*/
-
-	// 	resetHandler();
-	// };
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -124,6 +93,11 @@ function AddProductByVendorScreen() {
 			return;
 		}
 	
+		// Calculate the discounted price if discount percentage is provided
+		const actualPrice = parseFloat(price);
+		const discountPercentage = parseFloat(discount) || 0;
+		const discountedPrice = calculateDiscountedPrice(actualPrice, discountPercentage);
+		
 		// Create a product data object with all necessary fields
 		const productData = {
 			vendorEmail,
@@ -131,7 +105,7 @@ function AddProductByVendorScreen() {
 			category,
 			description,
 			picURL,
-			price,
+			price: actualPrice,
 			preparationTime,
 			availability,
 			customizations,
@@ -141,8 +115,8 @@ function AddProductByVendorScreen() {
 			ingredients: customizations || "Not specified",
 			usage: "Consume fresh",
 			warnings: "No specific warnings",
-			discountNote: "No current discounts",
-			discountPrice: price, // Default to regular price
+			discountNote: discountPercentage > 0 ? `${discountPercentage}% discount` : "No current discounts",
+			discountPrice: discountedPrice, // Use the calculated discounted price
 			quantity: 100 // Default stock quantity
 		};
 	
@@ -279,6 +253,22 @@ function AddProductByVendorScreen() {
 												</Form.Group>
 											</Col>
 											<Col md={6}>
+												<Form.Group controlId="menuItemFormBasicDiscount" className="mb-3">
+													<Form.Label>Discount (%) <span className="text-info">Optional</span></Form.Label>
+													<Form.Control
+														type="number"
+														value={discount}
+														placeholder="Enter discount percentage"
+														onChange={(e) => setDiscount(e.target.value)}
+														min="0"
+														max="100"
+													/>
+												</Form.Group>
+											</Col>
+										</Row>
+										
+										<Row>
+											<Col md={6}>
 												<Form.Group controlId="menuItemFormBasicPrepTime" className="mb-3">
 													<Form.Label>Preparation Time (minutes) <span className="required">*</span></Form.Label>
 													<Form.Control
@@ -290,22 +280,23 @@ function AddProductByVendorScreen() {
 													/>
 												</Form.Group>
 											</Col>
+											<Col md={6}>
+												<Form.Group controlId="menuItemFormBasicAvailability" className="mb-3">
+													<Form.Label>Availability</Form.Label>
+													<div className="availability-toggle">
+														<div 
+															className={`toggle-switch ${availability ? "active" : ""}`}
+															onClick={() => setAvailability(!availability)}
+														>
+															<div className="toggle-knob"></div>
+														</div>
+														<span className={`availability-status ${availability ? "text-success" : "text-danger"}`}>
+															{availability ? "Available" : "Out of Stock"}
+														</span>
+													</div>
+												</Form.Group>
+											</Col>
 										</Row>
-										
-										<Form.Group controlId="menuItemFormBasicAvailability" className="mb-3">
-											<Form.Label>Availability</Form.Label>
-											<div className="availability-toggle">
-												<div 
-													className={`toggle-switch ${availability ? "active" : ""}`}
-													onClick={() => setAvailability(!availability)}
-												>
-													<div className="toggle-knob"></div>
-												</div>
-												<span className={`availability-status ${availability ? "text-success" : "text-danger"}`}>
-													{availability ? "Available" : "Out of Stock"}
-												</span>
-											</div>
-										</Form.Group>
 										
 										<Form.Group controlId="menuItemFormBasicCustomizations" className="mb-3">
 											<Form.Label>Customizations/Add-ons (Optional)</Form.Label>
@@ -388,7 +379,19 @@ function AddProductByVendorScreen() {
 										<div className="preview-details">
 											{itemName && <h3 className="item-name">{itemName}</h3>}
 											{category && <span className="item-category">{category}</span>}
-											{price && <div className="item-price">LKR {price}</div>}
+											{price && (
+												<div className="item-price">
+													{discount ? (
+														<>
+															<span className="original-price">LKR {price}</span>
+															<span className="discounted-price">LKR {calculateDiscountedPrice(price, discount)}</span>
+															<span className="discount-badge">{discount}% OFF</span>
+														</>
+													) : (
+														<>LKR {price}</>
+													)}
+												</div>
+											)}
 											{preparationTime && (
 												<div className="prep-time">
 													<small>Preparation time: {preparationTime} mins</small>

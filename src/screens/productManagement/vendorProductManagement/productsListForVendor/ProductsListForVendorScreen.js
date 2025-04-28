@@ -10,7 +10,7 @@ import {
 import Loading from "../../../../components/Loading";
 import ErrorMessage from "../../../../components/ErrorMessage";
 import swal from "sweetalert";
-import { FaPlus, FaEdit, FaTrash, FaSearch, FaSort, FaEye, FaArrowLeft, FaClock } from "react-icons/fa";
+import { FaPlus, FaEdit, FaTrash, FaSearch, FaSort, FaEye, FaArrowLeft, FaClock, FaPercentage } from "react-icons/fa";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
 import "./productLists.css";
 
@@ -41,6 +41,7 @@ const ProductsListForVendorScreen = () => {
   const [itemsPerPage] = useState(6);
   const [expandedProduct, setExpandedProduct] = useState(null);
   const [categoryFilter, setCategoryFilter] = useState("All");
+  const [offerFilter, setOfferFilter] = useState("All"); // New state for filtering by offers
 
   // Delete handler with confirmation
   const deleteHandler = (id) => {
@@ -104,7 +105,7 @@ const ProductsListForVendorScreen = () => {
     return ["All", ...new Set(categories)];
   };
 
-  // Filter products by category and search term
+  // Filter products by category, offers and search term
   const filterProducts = () => {
     if (!products) return [];
     
@@ -115,14 +116,20 @@ const ProductsListForVendorScreen = () => {
       
       const matchesCategory = categoryFilter === "All" || product.category === categoryFilter;
       
-      return matchesSearch && matchesCategory;
+      // Check if product has discounts based on discountPrice and price
+      const hasDiscount = product.discountPrice < product.price;
+      const matchesOffer = offerFilter === "All" || 
+                          (offerFilter === "With Offers" && hasDiscount) || 
+                          (offerFilter === "No Offers" && !hasDiscount);
+      
+      return matchesSearch && matchesCategory && matchesOffer;
     });
   };
 
   // Sort products
   const sortProducts = (products) => {
     return [...products].sort((a, b) => {
-      if (sortField === "price" || sortField === "preparationTime") {
+      if (sortField === "price" || sortField === "preparationTime" || sortField === "discountPrice") {
         return sortOrder === "asc" 
           ? Number(a[sortField]) - Number(b[sortField])
           : Number(b[sortField]) - Number(a[sortField]);
@@ -174,9 +181,26 @@ const ProductsListForVendorScreen = () => {
       <Badge bg="danger">Out of Stock</Badge>;
   };
 
-  // Format price
-  const formatPrice = (price) => {
-    return <span>LKR {price}</span>;
+  // Get discount badge if product has a discount
+  const getDiscountBadge = (price, discountPrice) => {
+    if (discountPrice < price) {
+      const discountPercentage = Math.round((1 - (discountPrice / price)) * 100);
+      return <Badge bg="warning" text="dark"><FaPercentage /> {discountPercentage}% OFF</Badge>;
+    }
+    return null;
+  };
+
+  // Format price with optional discount
+  const formatPrice = (price, discountPrice) => {
+    if (discountPrice < price) {
+      return (
+        <span>
+          <span className="original-price">LKR {price.toFixed(2)}</span>
+          <span className="discounted-price ms-2">LKR {discountPrice.toFixed(2)}</span>
+        </span>
+      );
+    }
+    return <span>LKR {price.toFixed(2)}</span>;
   };
 
   if (vendorInfo) {
@@ -211,7 +235,7 @@ const ProductsListForVendorScreen = () => {
           <Card className="filter-card mb-4">
             <Card.Body>
               <Row className="align-items-center">
-                <Col lg={5} md={6} sm={12}>
+                <Col lg={3} md={6} sm={12}>
                   <div className="search-box">
                     <div className="input-group">
                       <span className="input-group-text bg-light">
@@ -219,7 +243,7 @@ const ProductsListForVendorScreen = () => {
                       </span>
                       <Form.Control
                         type="text"
-                        placeholder="Search by name or category..."
+                        placeholder="Search Here..."
                         value={search}
                         onChange={searchHandler}
                         className="search-input"
@@ -227,7 +251,7 @@ const ProductsListForVendorScreen = () => {
                     </div>
                   </div>
                 </Col>
-                <Col lg={4} md={6} sm={6} className="mt-3 mt-lg-0">
+                <Col lg={3} md={6} sm={6} className="mt-3 mt-lg-0">
                   <Form.Group>
                     <Form.Control
                       as="select"
@@ -244,6 +268,20 @@ const ProductsListForVendorScreen = () => {
                   </Form.Group>
                 </Col>
                 <Col lg={3} md={6} sm={6} className="mt-3 mt-lg-0">
+                  <Form.Group>
+                    <Form.Control
+                      as="select"
+                      value={offerFilter}
+                      onChange={(e) => setOfferFilter(e.target.value)}
+                      className="offer-filter"
+                    >
+                      <option value="All">All Items</option>
+                      <option value="With Offers">With Offers</option>
+                      <option value="No Offers">No Offers</option>
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+                <Col lg={3} md={6} sm={6} className="mt-3 mt-lg-0">
                   <Dropdown>
                     <Dropdown.Toggle 
                       variant="primary" 
@@ -252,12 +290,14 @@ const ProductsListForVendorScreen = () => {
                     >
                       <FaSort className="me-1" /> Sort By: {sortField === "title" ? "Name" : 
                                                           sortField === "preparationTime" ? "Prep Time" : 
+                                                          sortField === "discountPrice" ? "Sale Price" :
                                                           sortField.charAt(0).toUpperCase() + sortField.slice(1)}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item onClick={() => handleSort("title")}>Name</Dropdown.Item>
                       <Dropdown.Item onClick={() => handleSort("category")}>Category</Dropdown.Item>
-                      <Dropdown.Item onClick={() => handleSort("price")}>Price</Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleSort("price")}>Regular Price</Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleSort("discountPrice")}>Sale Price</Dropdown.Item>
                       <Dropdown.Item onClick={() => handleSort("preparationTime")}>Preparation Time</Dropdown.Item>
                       <Dropdown.Item onClick={() => handleSort("createdAt")}>Date Added</Dropdown.Item>
                     </Dropdown.Menu>
@@ -288,6 +328,11 @@ const ProductsListForVendorScreen = () => {
                   in category "<strong>{categoryFilter}</strong>"
                 </span>
               )}
+              {offerFilter !== "All" && (
+                <span className="ms-2">
+                  "<strong>{offerFilter}</strong>"
+                </span>
+              )}
             </p>
           </div>
 
@@ -306,6 +351,7 @@ const ProductsListForVendorScreen = () => {
                   <th className="sortable" onClick={() => handleSort("price")}>
                     Price {sortField === "price" && (sortOrder === "asc" ? "↑" : "↓")}
                   </th>
+                  <th>Offers</th>
                   <th className="sortable" onClick={() => handleSort("preparationTime")}>
                     Prep Time {sortField === "preparationTime" && (sortOrder === "asc" ? "↑" : "↓")}
                   </th>
@@ -327,7 +373,8 @@ const ProductsListForVendorScreen = () => {
                         </td>
                         <td>{product.title}</td>
                         <td>{product.category}</td>
-                        <td>{formatPrice(product.price)}</td>
+                        <td>{formatPrice(product.price, product.discountPrice)}</td>
+                        <td>{getDiscountBadge(product.price, product.discountPrice) || "No offers"}</td>
                         <td>{product.preparationTime} mins</td>
                         <td>{getAvailabilityBadge(product.availability)}</td>
                         <td>
@@ -360,7 +407,7 @@ const ProductsListForVendorScreen = () => {
                       </tr>
                       {expandedProduct === product._id && (
                         <tr className="details-row">
-                          <td colSpan="7">
+                          <td colSpan="8">
                             <div className="product-details-expanded">
                               <Row>
                                 <Col md={3}>
@@ -382,8 +429,14 @@ const ProductsListForVendorScreen = () => {
                                         <span className="detail-label">Category:</span> {product.category}
                                       </div>
                                       <div className="detail-item">
-                                        <span className="detail-label">Price:</span> LKR {product.price}
+                                        <span className="detail-label">Regular Price:</span> LKR {product.price.toFixed(2)}
                                       </div>
+                                      {product.discountPrice < product.price && (
+                                        <div className="detail-item">
+                                          <span className="detail-label">Sale Price:</span> 
+                                          <span className="discounted-price ms-2">LKR {product.discountPrice.toFixed(2)}</span>
+                                        </div>
+                                      )}
                                       <div className="detail-item">
                                         <span className="detail-label">Preparation Time:</span> {product.preparationTime} minutes
                                       </div>
@@ -395,6 +448,12 @@ const ProductsListForVendorScreen = () => {
                                       <div className="detail-item">
                                         <span className="detail-label">Customizations:</span> {product.customizations || "None"}
                                       </div>
+                                      {product.discountNote && product.discountPrice < product.price && (
+                                        <div className="detail-item">
+                                          <span className="detail-label">Offer Details:</span> 
+                                          <span className="discount-note ms-2">{product.discountNote}</span>
+                                        </div>
+                                      )}
                                       <div className="detail-item">
                                         <span className="detail-label">Added On:</span> {new Date(product.createdAt).toLocaleDateString()}
                                       </div>
@@ -414,8 +473,8 @@ const ProductsListForVendorScreen = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="7" className="text-center py-4">
-                      {search || categoryFilter !== "All" ? "No items match your search" : "No menu items found. Add your first item!"}
+                    <td colSpan="8" className="text-center py-4">
+                      {search || categoryFilter !== "All" || offerFilter !== "All" ? "No items match your search" : "No menu items found. Add your first item!"}
                     </td>
                   </tr>
                 )}
