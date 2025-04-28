@@ -48,32 +48,32 @@ export default function CartView() {
   };
 
   useEffect(() => {
-    const fetchingTotal = async () => {
-      if (!customerInfo) return;
-      
-      try {
-        const { data } = await axios.get(`${API_ENDPOINT}/cart-items/cart/total/${customerInfo._id}`, {
-          headers: authHeader(),
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": true,
-        });
-        setTotal(data.totalPrice);
-      } catch (error) {
-        console.error("Error fetching cart total:", error);
-      }
-    };
-
-    fetchingTotal();
-    localStorage.setItem("total", total);
-    dispatch(listCart());
-  }, [dispatch, history, customerInfo, total]);
+	const fetchingTotal = async () => {
+	  if (!customerInfo) return;
+	  
+	  try {
+		const { data } = await axios.get(`${API_ENDPOINT}/cart-items/cart/total/${customerInfo._id}`, {
+		  headers: authHeader(),
+		  "Access-Control-Allow-Origin": "*",
+		  "Access-Control-Allow-Credentials": true,
+		});
+		setTotal(data.totalPrice);
+		localStorage.setItem("total", data.totalPrice); // Move inside here
+	  } catch (error) {
+		console.error("Error fetching cart total:", error);
+	  }
+	};
+  
+	fetchingTotal();
+	dispatch(listCart());
+  }, [dispatch, history, customerInfo]);
 
   useEffect(() => {
     setIsCartEmpty(!carts || carts.length === 0);
   }, [carts]);
 
   const calculateItemTotal = (price, discountPrice, quantity) => {
-    return ((price - discountPrice) * quantity).toFixed(2);
+	return (discountPrice * quantity).toFixed(2);
   };
 
   if (!customerInfo) {
