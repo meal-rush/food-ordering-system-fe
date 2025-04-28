@@ -9,26 +9,27 @@
     padding: 20px 15px;
   }
   
-  /* Hero Section */
+  /* Hero Section - Updated with white background */
   .about-hero-section {
     margin-bottom: 50px;
     padding: 60px 30px;
-    background: linear-gradient(to right, #1fab66, #29C379);
+    background: white;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    color: white;
+    color: #333;
   }
   
   .about-title {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 15px;
+    color: #29C379;
   }
   
   .title-underline {
     height: 4px;
     width: 70px;
-    background-color: white;
+    background-color: #29C379;
     margin: 0 auto 20px;
     border-radius: 2px;
   }
@@ -38,6 +39,7 @@
     font-weight: 400;
     max-width: 800px;
     margin: 0 auto;
+    color: #555;
   }
   
   /* Story Section */
@@ -146,80 +148,26 @@
     font-size: 1rem;
   }
   
-  /* Team Section */
-  .about-team-section {
-    margin-bottom: 60px;
-    padding: 30px;
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  }
+  /* Team Section styles removed */
   
-  .team-card {
-    height: 100%;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
-    overflow: hidden;
-  }
-  
-  .team-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  }
-  
-  .team-image-container {
-    padding: 20px 0;
-    background-color: #f8f9fa;
-  }
-  
-  .team-img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin: 0 auto;
-  }
-  
-  .team-name {
-    font-weight: 600;
-    color: #333;
-    margin-top: 10px;
-    font-size: 1.3rem;
-  }
-  
-  .team-role {
-    color: #29C379;
-    font-size: 1rem;
-    margin-bottom: 10px;
-  }
-  
-  .team-description {
-    color: #666;
-    font-size: 0.9rem;
-    padding: 0 10px;
-  }
-  
-  /* Contact Section */
+  /* Contact Section - Updated with white background */
   .about-contact-section {
     margin-bottom: 30px;
     padding: 30px;
-    background: linear-gradient(to right, #29C379, #1fab66);
+    background: white;
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    color: #333;
   }
   
   .about-contact-section .section-heading::after {
-    background-color: white;
+    background-color: #29C379;
   }
   
   .contact-card {
     text-align: center;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #f8f9fa;
     border-radius: 10px;
     height: 100%;
     transition: transform 0.3s ease;
@@ -227,23 +175,26 @@
   
   .contact-card:hover {
     transform: translateY(-5px);
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: #f1f1f1;
   }
   
   .contact-icon {
     font-size: 2.5rem;
     margin-bottom: 15px;
+    color: #29C379;
   }
   
   .contact-card h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
     font-weight: 600;
+    color: #333;
   }
   
   .contact-card p {
     font-size: 1.1rem;
     line-height: 1.5;
+    color: #555;
   }
   
   /* Responsive Adjustments */
@@ -311,7 +262,7 @@
       font-size: 1.4rem;
     }
     
-    .feature-card, .team-card {
+    .feature-card {
       margin-bottom: 15px;
     }
   }

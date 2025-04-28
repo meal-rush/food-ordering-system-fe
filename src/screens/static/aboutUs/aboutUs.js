@@ -38,7 +38,7 @@ const AboutUsScreen = () => {
               <h1 className="about-title">About MealRush</h1>
               <div className="title-underline"></div>
               <p className="about-subtitle">
-                Connecting hungry people with the best restaurants since 2025
+                Connecting hungry people with the best restaurants since 2022
               </p>
             </Col>
           </Row>
