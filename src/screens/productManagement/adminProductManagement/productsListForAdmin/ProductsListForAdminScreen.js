@@ -238,9 +238,9 @@ const ProductsListForAdminScreen = () => {
 											</td>
 											<td>
 												<div className="price-info">
-													<div className="main-price">${product.price}</div>
+													<div className="main-price">Rs. {product.price}</div>
 													{product.discountPrice && (
-														<div className="discount-price">${product.discountPrice}</div>
+														<div className="discount-price">Rs. {product.discountPrice}</div>
 													)}
 												</div>
 											</td>

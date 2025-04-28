@@ -1,0 +1,218 @@
+/* Customer Dashboard Styles */
+.customerDashboard {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 100%);
+    padding-bottom: 50px;
+  }
+  
+  .dashboard-container {
+    padding: 20px;
+  }
+  
+  /* Welcome Section Styles */
+  .welcome-section {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .welcome-text h1 {
+    color: #29C379;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .welcome-description {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  
+  .hero-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+  }
+  
+  .logout-btn {
+    padding: 10px 25px;
+    font-weight: 600;
+    border-radius: 30px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .logout-btn:hover {
+    background-color: #c62828;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(211, 47, 47, 0.3);
+  }
+  
+  /* Features Section Styles */
+  .features-section {
+    margin-top: 30px;
+  }
+  
+  .section-title {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 12px;
+  }
+  
+  .section-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 3px;
+    background: #29C379;
+    border-radius: 1.5px;
+  }
+  
+  .feature-card-col {
+    margin-bottom: 30px;
+    padding: 0 15px;
+  }
+  
+  .feature-card {
+    height: 100%;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(63, 81, 181, 0.15);
+    border-top: 3px solid #29C379;
+  }
+  
+  .icon-container {
+    margin: 20px auto;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(63, 81, 181, 0.1);
+    border-radius: 50%;
+  }
+  
+  .feature-icon {
+    color: #29C379;
+  }
+  
+  .feature-card .card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .feature-card .card-text {
+    color: #666;
+    margin-bottom: 20px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .feature-btn {
+    background-color: #29C379;
+    border: none;
+    border-radius: 30px;
+    padding: 8px 25px;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .feature-btn:hover {
+    background-color: #303f9f;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(63, 81, 181, 0.3);
+  }
+  
+  /* Access Denied Styles */
+  .denied {
+    background: url("https://res.cloudinary.com/bytesquad202202/image/upload/v1660761809/images/accessDenied_zhvugi.jpg");
+    background-position: center;
+    background-size: cover;
+    min-height: 80vh;
+  }
+  
+  /* Responsive Adjustments */
+  @media only screen and (max-width: 992px) {
+    .welcome-text h1 {
+      font-size: 2.2rem;
+    }
+  
+    .welcome-description {
+      font-size: 1rem;
+    }
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .welcome-section {
+      text-align: center;
+    }
+  
+    .welcome-text {
+      margin-bottom: 30px;
+    }
+  
+    .hero-image {
+      max-height: 250px;
+      margin: 0 auto;
+    }
+  
+    .feature-card .card-text {
+      height: auto;
+    }
+  }
+  
+  @media only screen and (max-width: 576px) {
+    .welcome-text h1 {
+      font-size: 1.8rem;
+    }
+  
+    .section-title {
+      font-size: 1.5rem;
+    }
+    
+    .feature-card-col {
+      padding: 0 10px;
+    }
+  }
+  
+  /* Handle smaller screens */
+  @media only screen and (max-width: 480px) {
+    .welcome-section {
+      padding: 20px 15px;
+    }
+    
+    .dashboard-container {
+      padding: 15px 10px;
+    }
+    
+    .logout-btn {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
