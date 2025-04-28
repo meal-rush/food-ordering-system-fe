@@ -44,6 +44,7 @@ import CustomerDeliveryList from "./screens/deliveryManagement/DeliveriesForEach
 import VendorOrderList from "./screens/orderManagement/VendorOrderList";
 import VendorUpdateOrder from "./screens/orderManagement/VendorUpdateOrder";
 import ContactUsScreen from "./screens/static/contactUs/contactUs";
+import AboutUsScreen from "./screens/static/aboutUs/aboutUs";
 
 const App = () => {
 	return (
@@ -92,6 +93,7 @@ const App = () => {
 				<Route path="/vendor-orders" component={VendorOrderList} exact />
 				<Route path="/vendor-update-order/:id" component={VendorUpdateOrder} exact/>
 				<Route path="/contactus" component={ContactUsScreen} exact/>
+				<Route path="/aboutus" component={AboutUsScreen} exact/>
 			</main>
 			<Footer />
 		</BrowserRouter>
