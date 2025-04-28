@@ -43,6 +43,7 @@ import AdminUpdateDelivery from "./screens/deliveryManagement/AdminUpdateDeliver
 import CustomerDeliveryList from "./screens/deliveryManagement/DeliveriesForEachCustomer";
 import VendorOrderList from "./screens/orderManagement/VendorOrderList";
 import VendorUpdateOrder from "./screens/orderManagement/VendorUpdateOrder";
+import ContactUsScreen from "./screens/static/contactUs/contactUs";
 
 const App = () => {
 	return (
@@ -90,6 +91,7 @@ const App = () => {
 				<Route path="/delivery-create/:id" component={DeliveriesCreate} exact />
 				<Route path="/vendor-orders" component={VendorOrderList} exact />
 				<Route path="/vendor-update-order/:id" component={VendorUpdateOrder} exact/>
+				<Route path="/contactus" component={ContactUsScreen} exact/>
 			</main>
 			<Footer />
 		</BrowserRouter>
