@@ -16,7 +16,7 @@ import ErrorMessage from "../../../components/ErrorMessage";
 import MainScreen from "../../../components/MainScreen";
 import { vendorUpdateProfile, vendorDeleteProfile } from "../../../actions/userManagementActions/vendorActions";
 import swal from "sweetalert";
-import "./EditScreen.css";
+import "./vendorEditScreen.css";
 
 const VendorEditScreen = ({ history }) => {
 	// All the existing state variables remain the same

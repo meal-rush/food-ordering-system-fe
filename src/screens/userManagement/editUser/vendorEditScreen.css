@@ -1,0 +1,345 @@
+.profilePic {
+	display: flex;
+	align-items: center;
+	padding: 5px;
+}
+
+.profileContainer {
+	display: flex;
+	margin: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+	.profileContainer {
+		flex-direction: column-reverse;
+	}
+}
+
+.editBg {
+	background: url("https://res.cloudinary.com/dfmnpw0yp/image/upload/v1681506121/assets/qpvvmswmm0m0jkhkkvrr.jpg");
+	background-position: center;
+	background-size: cover;
+}
+
+.denied {
+	background: url("https://res.cloudinary.com/bytesquad202202/image/upload/v1660761809/images/accessDenied_zhvugi.jpg");
+	background-position: center;
+	background-size: cover;
+}
+
+/* General profile styles (shared with ViewScreen.css) */
+.editProfileBg {
+	background-color: #f8f9fa;
+	min-height: 100vh;
+	padding: 20px 0;
+}
+
+/* Profile Card */
+.profile-card {
+	border: none;
+	border-radius: 15px;
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+	overflow: hidden;
+	background-color: #ffffff;
+}
+
+/* Profile Title */
+.profile-title {
+	color: #333;
+	font-weight: 600;
+}
+
+/* Back Button */
+.back-btn {
+	padding: 8px 16px;
+	border-radius: 30px;
+	font-weight: 500;
+	transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile Image Section */
+.profile-image-section {
+	padding: 20px;
+	border-right: 1px solid #eee;
+}
+
+.profile-image-container {
+	position: relative;
+	width: 180px;
+	height: 180px;
+	margin: 0 auto;
+	border-radius: 50%;
+	overflow: hidden;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	border: 4px solid #f8f9fa;
+}
+
+.profile-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* Image upload overlay */
+.edit-profile-image {
+	position: relative;
+	cursor: pointer;
+}
+
+.image-upload-overlay {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.5);
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s ease;
+}
+
+.upload-icon-wrapper {
+	cursor: pointer;
+}
+
+.upload-icon {
+	color: white;
+	font-size: 1.2rem;
+}
+
+.restaurant-name {
+	margin-top: 15px;
+	font-weight: 700;
+	color: #333;
+}
+
+.vendor-name {
+	font-size: 0.9rem;
+	color: #777;
+}
+
+/* Delete account section */
+.danger-zone {
+	background-color: #fff8f8;
+	border: 1px solid #ffe0e0;
+	border-radius: 10px;
+	padding: 20px;
+	margin-top: 30px;
+}
+
+.danger-zone-title {
+	color: #dc3545;
+	font-weight: 600;
+	font-size: 1.1rem;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.delete-account-btn {
+	border-radius: 30px;
+	padding: 8px 20px;
+	transition: all 0.3s ease;
+	margin-top: 10px;
+}
+
+.delete-account-btn:hover {
+	background-color: #bd2130;
+	transform: translateY(-2px);
+}
+
+/* Tabs */
+.profile-tabs {
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.profile-tabs .nav-link {
+	color: #555;
+	font-weight: 500;
+	border: none;
+	padding: 12px 20px;
+}
+
+.profile-tabs .nav-link.active {
+	color: #29C379;
+	border-bottom: 3px solid #29C379;
+	background-color: transparent;
+}
+
+.profile-tabs .nav-link:hover:not(.active) {
+	color: #1fab66;
+	border-bottom: 3px solid #e0e0e0;
+}
+
+/* Form styles */
+.edit-form-section {
+	padding: 10px 0;
+}
+
+.section-subtitle {
+	color: #333;
+	font-weight: 600;
+}
+
+.form-control {
+	border-radius: 8px;
+	padding: 10px 15px;
+	border: 1px solid #e0e0e0;
+	transition: all 0.3s ease;
+}
+
+.form-control:focus {
+	border-color: #29C379;
+	box-shadow: 0 0 0 0.2rem rgba(41, 195, 121, 0.25);
+}
+
+/* Buttons */
+.btn-success {
+	background-color: #29C379;
+	border-color: #29C379;
+	border-radius: 30px;
+	padding: 8px 24px;
+	font-weight: 500;
+	transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+	background-color: #1fab66;
+	border-color: #1fab66;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(41, 195, 121, 0.25);
+}
+
+.btn-secondary {
+	border-radius: 30px;
+	padding: 8px 24px;
+	font-weight: 500;
+	transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Access Denied Page */
+.denied {
+	background: url("https://res.cloudinary.com/bytesquad202202/image/upload/v1660761809/images/accessDenied_zhvugi.jpg");
+	background-position: center;
+	background-size: cover;
+	min-height: 80vh;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991px) {
+	.profile-image-section {
+		border-right: none;
+		border-bottom: 1px solid #eee;
+		padding-bottom: 30px;
+		margin-bottom: 20px;
+	}
+
+	.profile-image-container {
+		width: 150px;
+		height: 150px;
+	}
+}
+
+@media (max-width: 767px) {
+	.back-btn {
+		padding: 6px 12px;
+		font-size: 0.85rem;
+	}
+
+	.profile-title {
+		font-size: 1.5rem;
+	}
+
+	.profile-tabs .nav-link {
+		padding: 10px 15px;
+		font-size: 0.9rem;
+	}
+}
+
+@media (max-width: 576px) {
+	.restaurant-name {
+		font-size: 1.5rem;
+	}
+
+	.profile-image-container {
+		width: 120px;
+		height: 120px;
+	}
+
+	.section-subtitle {
+		font-size: 1.2rem;
+	}
+
+	.danger-zone {
+		padding: 15px;
+	}
+
+	.danger-zone-title {
+		font-size: 1rem;
+	}
+}
+
+/* Toggle Switch Styles */
+.status-toggle-container {
+	padding: 10px 0;
+}
+
+.toggle-switch-container {
+	display: flex;
+	align-items: center;
+}
+
+.toggle-switch {
+	position: relative;
+	width: 60px;
+	height: 30px;
+	background-color: #ccc;
+	border-radius: 15px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	margin-right: 10px;
+}
+
+.toggle-switch.active {
+	background-color: #28a745;
+}
+
+.toggle-knob {
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 24px;
+	height: 24px;
+	background-color: #fff;
+	border-radius: 50%;
+	transition: left 0.3s;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-switch.active .toggle-knob {
+	left: 33px;
+}
+
+.toggle-label {
+	font-weight: 500;
+	font-size: 16px;
+}
+
+.text-success {
+	color: #28a745;
+}
+
+.text-danger {
+	color: #dc3545;
+}

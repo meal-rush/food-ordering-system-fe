@@ -44,7 +44,7 @@ export default function CustomerOrderList() {
                                     <tr key={order._id} className="order-row">
                                         <td>{order.orderID}</td>
                                         <td>{order.products}</td>
-                                        <td>${order.total.toFixed(2)}</td>
+                                        <td>Rs. {order.total.toFixed(2)}</td>
                                         <td>
                                             <Button
                                                 href={`/payment/${order._id}`}

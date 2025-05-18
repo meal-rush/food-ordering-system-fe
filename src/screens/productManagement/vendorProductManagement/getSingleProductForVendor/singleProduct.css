@@ -434,3 +434,32 @@ textarea.form-control {
 		font-size: 1.5rem;
 	}
 }
+
+/* Discount styling */
+.original-price {
+	text-decoration: line-through;
+	color: #999;
+	font-size: 0.9rem;
+	margin-right: 10px;
+	display: block;
+  }
+  
+  .discounted-price {
+	color: #ff6b6b;
+	font-weight: bold;
+	margin-right: 10px;
+  }
+  
+  .discount-badge {
+	background-color: #ff6b6b;
+	color: white;
+	padding: 3px 8px;
+	border-radius: 12px;
+	font-size: 0.75rem;
+	font-weight: 500;
+  }
+  
+  /* Make sure these styles are included in your CSS file */
+  .text-info {
+	color: #17a2b8;
+  }
