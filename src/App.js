@@ -43,6 +43,8 @@ import AdminUpdateDelivery from "./screens/deliveryManagement/AdminUpdateDeliver
 import CustomerDeliveryList from "./screens/deliveryManagement/DeliveriesForEachCustomer";
 import VendorOrderList from "./screens/orderManagement/VendorOrderList";
 import VendorUpdateOrder from "./screens/orderManagement/VendorUpdateOrder";
+import ContactUsScreen from "./screens/static/contactUs/contactUs";
+import AboutUsScreen from "./screens/static/aboutUs/aboutUs";
 import DriverLogin from "./screens/driverManagement/DriverLogin";
 import DriverDashboard from "./screens/driverManagement/DriverDashboard";
 
@@ -91,6 +93,9 @@ const App = () => {
 				<Route path="/payment/:id" component={StripeContainer} exact />
 				<Route path="/delivery-create/:id" component={DeliveriesCreate} exact />
 				<Route path="/vendor-orders" component={VendorOrderList} exact />
+				<Route path="/vendor-update-order/:id" component={VendorUpdateOrder} exact/>
+				<Route path="/contactus" component={ContactUsScreen} exact/>
+				<Route path="/aboutus" component={AboutUsScreen} exact/>
 				<Route path="/vendor-update-order/:id" component={VendorUpdateOrder} exact />
 				<Route path="/driver-login" component={DriverLogin} exact />
 				<Route path="/driver-dashboard" component={DriverDashboard} exact />

@@ -1,0 +1,325 @@
+/* Main container styles */
+.order-update-background {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding-bottom: 40px;
+  }
+  
+  .update-order-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .back-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 15px;
+    font-weight: 500;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .back-button:hover {
+    transform: translateX(-5px);
+  }
+  
+  /* Order update card */
+  .order-update-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+  }
+  
+  .update-card-header {
+    /* Changed from blue to green gradient */
+    background: linear-gradient(135deg, rgba(65, 179, 105, 0.8) 0%, rgba(41, 195, 121, 0.9) 100%);
+    color: white;
+    padding: 20px;
+    border-bottom: none;
+  }
+  
+  .order-update-body {
+    padding: 30px;
+  }
+  
+  /* Order progress section */
+  .order-progress-section {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .order-progress {
+    height: 12px;
+    border-radius: 6px;
+    margin: 10px 0 8px;
+  }
+  
+  .status-badge {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    border-radius: 30px;
+    font-weight: 500;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .status-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #6c757d;
+    padding: 0 3px;
+  }
+  
+  .status-labels span {
+    position: relative;
+    text-align: center;
+    width: 20%;
+  }
+  
+  .status-labels span.active {
+    /* Changed from blue to green */
+    color: #29C379;
+    font-weight: bold;
+  }
+  
+  /* Status icons */
+  .status-icon {
+    font-size: 14px;
+  }
+  
+  .status-icon.pending {
+    color: #ffc107;
+  }
+  
+  .status-icon.confirmed {
+    /* Changed from blue to a softer green */
+    color: #6FBE4A;
+  }
+  
+  .status-icon.preparing {
+    /* Changed from blue to green */
+    color: #29C379;
+  }
+  
+  .status-icon.ready {
+    color: #28a745;
+  }
+  
+  .status-icon.delivered {
+    color: #343a40;
+  }
+  
+  .status-icon.cancelled {
+    color: #dc3545;
+  }
+  
+  /* Order details card */
+  .order-details-card {
+    /* Light green background instead of light gray */
+    background-color: rgba(41, 195, 121, 0.05);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+  }
+  
+  .details-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+  }
+  
+  .details-header:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    /* Changed blue to green */
+    background-color: #29C379;
+  }
+  
+  .order-info-section {
+    margin-bottom: 20px;
+  }
+  
+  .info-item {
+    display: flex;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  
+  .info-label {
+    font-weight: 600;
+    color: #6c757d;
+    width: 140px;
+    flex-shrink: 0;
+  }
+  
+  .info-value {
+    color: #212529;
+  }
+  
+  .info-value.price {
+    font-weight: 600;
+    /* Keep green for the price */
+    color: #29C379;
+  }
+  
+  .details-subheader {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 15px 0;
+    color: #495057;
+  }
+  
+  .order-items-section {
+    border-top: 1px solid #dee2e6;
+    padding-top: 20px;
+  }
+  
+  .order-items-content {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    white-space: pre-line;
+  }
+  
+  /* Status update form */
+  .status-update-form {
+    padding: 25px;
+    /* Light green background instead of light gray */
+    background-color: rgba(41, 195, 121, 0.05);
+    border-radius: 12px;
+  }
+  
+  .update-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+  }
+  
+  .update-header:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    /* Keeping green for consistency */
+    background-color: #29C379;
+  }
+  
+  .status-selection {
+    width: 100%;
+  }
+  
+  .status-select {
+    height: 50px;
+    border-radius: 8px;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+    background-color: white;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+  }
+  
+  .cancel-btn, .update-btn {
+    padding: 12px 30px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    flex-basis: 50%;
+  }
+  
+  .update-btn {
+    /* Changed to match the green from vendor dashboard */
+    background-color: #29C379;
+    border-color: #29C379;
+  }
+  
+  .update-btn:hover {
+    /* Darker shade of the same green */
+    background-color: #1fab66;
+    border-color: #1fab66;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(41, 195, 121, 0.15);
+  }
+  
+  .cancel-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 767px) {
+    .update-order-container {
+      padding: 15px;
+    }
+    
+    .order-update-body {
+      padding: 20px;
+    }
+    
+    .info-item {
+      flex-direction: column;
+    }
+    
+    .info-label {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+    
+    .action-buttons {
+      flex-direction: column;
+    }
+    
+    .status-labels {
+      font-size: 0.65rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .order-details-card,
+    .status-update-form {
+      padding: 15px;
+    }
+    
+    .update-card-header {
+      padding: 15px;
+    }
+    
+    .details-header,
+    .update-header {
+      font-size: 1.1rem;
+    }
+  }
+  
+  /* Access denied page */
+  .denied {
+    background: url("https://res.cloudinary.com/bytesquad202202/image/upload/v1660761809/images/accessDenied_zhvugi.jpg");
+    background-position: center;
+    background-size: cover;
+    min-height: 80vh;
+  }
