@@ -1,0 +1,317 @@
+/* About Us Page Styles */
+.aboutUsBackground {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding-bottom: 50px;
+  }
+  
+  .about-container {
+    padding: 20px 15px;
+  }
+  
+  /* Hero Section */
+  .about-hero-section {
+    margin-bottom: 50px;
+    padding: 60px 30px;
+    background: linear-gradient(to right, #1fab66, #29C379);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    color: white;
+  }
+  
+  .about-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+  
+  .title-underline {
+    height: 4px;
+    width: 70px;
+    background-color: white;
+    margin: 0 auto 20px;
+    border-radius: 2px;
+  }
+  
+  .about-subtitle {
+    font-size: 1.3rem;
+    font-weight: 400;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Story Section */
+  .about-story-section {
+    margin-bottom: 60px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    align-items: center;
+  }
+  
+  .section-heading {
+    color: #333;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 12px;
+  }
+  
+  .section-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: #29C379;
+    border-radius: 1.5px;
+  }
+  
+  .text-center .section-heading::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .story-text p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  
+  .story-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .about-img {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+  }
+  
+  /* Features Section */
+  .about-features-section {
+    margin-bottom: 60px;
+    padding: 30px;
+    background-color: #f1f8e9;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  .feature-card {
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    padding: 30px 15px;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feature-icon-container {
+    margin: 0 auto 20px;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(41, 195, 121, 0.1);
+    border-radius: 50%;
+  }
+  
+  .feature-icon {
+    color: #29C379;
+    font-size: 30px;
+  }
+  
+  .feature-title {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+  }
+  
+  .feature-card .card-text {
+    color: #666;
+    font-size: 1rem;
+  }
+  
+  /* Team Section */
+  .about-team-section {
+    margin-bottom: 60px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  .team-card {
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    overflow: hidden;
+  }
+  
+  .team-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .team-image-container {
+    padding: 20px 0;
+    background-color: #f8f9fa;
+  }
+  
+  .team-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto;
+  }
+  
+  .team-name {
+    font-weight: 600;
+    color: #333;
+    margin-top: 10px;
+    font-size: 1.3rem;
+  }
+  
+  .team-role {
+    color: #29C379;
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  .team-description {
+    color: #666;
+    font-size: 0.9rem;
+    padding: 0 10px;
+  }
+  
+  /* Contact Section */
+  .about-contact-section {
+    margin-bottom: 30px;
+    padding: 30px;
+    background: linear-gradient(to right, #29C379, #1fab66);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    color: white;
+  }
+  
+  .about-contact-section .section-heading::after {
+    background-color: white;
+  }
+  
+  .contact-card {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    height: 100%;
+    transition: transform 0.3s ease;
+  }
+  
+  .contact-card:hover {
+    transform: translateY(-5px);
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .contact-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .contact-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .contact-card p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+  
+  /* Responsive Adjustments */
+  @media only screen and (max-width: 992px) {
+    .about-title {
+      font-size: 2.5rem;
+    }
+    
+    .about-subtitle {
+      font-size: 1.2rem;
+    }
+    
+    .section-heading {
+      font-size: 1.8rem;
+    }
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .about-hero-section {
+      padding: 40px 20px;
+    }
+    
+    .about-title {
+      font-size: 2.2rem;
+    }
+    
+    .about-subtitle {
+      font-size: 1.1rem;
+    }
+    
+    .story-text {
+      margin-bottom: 30px;
+    }
+    
+    .section-heading {
+      font-size: 1.6rem;
+      text-align: center;
+    }
+    
+    .story-text .section-heading::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .story-text p {
+      font-size: 1rem;
+      text-align: center;
+    }
+    
+    .contact-card {
+      margin-bottom: 20px;
+    }
+  }
+  
+  @media only screen and (max-width: 576px) {
+    .about-hero-section {
+      padding: 30px 15px;
+    }
+    
+    .about-title {
+      font-size: 1.8rem;
+    }
+    
+    .section-heading {
+      font-size: 1.4rem;
+    }
+    
+    .feature-card, .team-card {
+      margin-bottom: 15px;
+    }
+  }

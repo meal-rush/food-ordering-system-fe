@@ -1,0 +1,245 @@
+.profilePic {
+	display: flex;
+	align-items: center;
+	padding: 5px;
+}
+.profileContainer {
+	display: flex;
+	margin: 20px;
+}
+@media only screen and (max-width: 768px) {
+	.profileContainer {
+		flex-direction: column-reverse;
+	}
+}
+.profileViewBg {
+	/* background: url("https://res.cloudinary.com/dfmnpw0yp/image/upload/v1681502933/assets/exlmg2albjl8v8djdlr1.jpg"); */
+	background-position: center;
+	background-size: cover;
+}
+.profileCont {
+	background: rgba(231, 238, 238, 0.5);
+}
+.denied {
+	background: url("https://res.cloudinary.com/bytesquad202202/image/upload/v1660761809/images/accessDenied_zhvugi.jpg");
+	background-position: center;
+	background-size: cover;
+}
+
+/* Profile View Background */
+.profileViewBg {
+	background-color: #f8f9fa;
+	min-height: 100vh;
+	padding: 20px 0;
+  }
+  
+  /* Main Profile Card */
+  .profile-card {
+	border: none;
+	border-radius: 15px;
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+	overflow: hidden;
+	background-color: #ffffff;
+  }
+  
+  /* Profile Title */
+  .profile-title {
+	color: #333;
+	font-weight: 600;
+  }
+  
+  /* Back & Logout Buttons */
+  .back-btn, .logout-btn {
+	padding: 8px 16px;
+	border-radius: 30px;
+	font-weight: 500;
+  }
+  
+  .back-btn:hover, .logout-btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Profile Image Section */
+  .profile-image-section {
+	padding: 20px;
+	border-right: 1px solid #eee;
+  }
+  
+  .profile-image-container {
+	position: relative;
+	width: 180px;
+	height: 180px;
+	margin: 0 auto;
+	border-radius: 50%;
+	overflow: hidden;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	border: 4px solid #f8f9fa;
+  }
+  
+  .profile-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+  }
+  
+  .restaurant-name {
+	margin-top: 15px;
+	font-weight: 700;
+	color: #333;
+  }
+  
+  .vendor-name {
+	font-size: 0.9rem;
+	color: #777;
+  }
+  
+  .status-badge {
+	padding: 8px 15px;
+	font-size: 0.85rem;
+	border-radius: 20px;
+  }
+  
+  .edit-profile-btn {
+	padding: 8px 20px;
+	border-radius: 30px;
+	background-color: #29C379;
+	border-color: #29C379;
+	transition: all 0.3s ease;
+  }
+  
+  .edit-profile-btn:hover {
+	background-color: #1fab66;
+	border-color: #1fab66;
+	transform: translateY(-2px);
+  }
+  
+  /* Tabs */
+  .profile-tabs {
+	border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .profile-tabs .nav-link {
+	color: #555;
+	font-weight: 500;
+	border: none;
+	padding: 12px 20px;
+  }
+  
+  .profile-tabs .nav-link.active {
+	color: #29C379;
+	border-bottom: 3px solid #29C379;
+	background-color: transparent;
+  }
+  
+  .profile-tabs .nav-link:hover:not(.active) {
+	color: #1fab66;
+	border-bottom: 3px solid #e0e0e0;
+  }
+  
+  /* Info Content */
+  .profile-info {
+	padding: 20px 10px;
+  }
+  
+  .section-title {
+	color: #333;
+	font-weight: 600;
+	margin-bottom: 25px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .info-row {
+	margin-bottom: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #f6f6f6;
+  }
+  
+  .info-row:last-child {
+	border-bottom: none;
+  }
+  
+  .info-label {
+	font-weight: 600;
+	color: #555;
+	display: flex;
+	align-items: center;
+  }
+  
+  .info-icon {
+	color: #29C379;
+	margin-right: 10px;
+  }
+  
+  .info-value {
+	color: #333;
+  }
+  
+  .description-value {
+	line-height: 1.6;
+	white-space: pre-line;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 991px) {
+	.profile-image-section {
+	  border-right: none;
+	  border-bottom: 1px solid #eee;
+	  padding-bottom: 30px;
+	  margin-bottom: 20px;
+	}
+	
+	.profile-image-container {
+	  width: 150px;
+	  height: 150px;
+	}
+  }
+  
+  @media (max-width: 767px) {
+	.info-label, .info-value {
+	  padding-top: 5px;
+	  padding-bottom: 5px;
+	}
+	
+	.info-row {
+	  margin-bottom: 10px;
+	}
+	
+	.back-btn, .logout-btn {
+	  padding: 6px 12px;
+	  font-size: 0.85rem;
+	}
+	
+	.profile-title {
+	  font-size: 1.5rem;
+	}
+  }
+  
+  @media (max-width: 576px) {
+	.profile-tabs .nav-link {
+	  padding: 10px 15px;
+	  font-size: 0.9rem;
+	}
+	
+	.restaurant-name {
+	  font-size: 1.5rem;
+	}
+	
+	.profile-image-container {
+	  width: 120px;
+	  height: 120px;
+	}
+	
+	.section-title {
+	  font-size: 1.3rem;
+	}
+  }
+  
+  /* Access Denied Page */
+  .denied {
+	background: url("https://res.cloudinary.com/bytesquad202202/image/upload/v1660761809/images/accessDenied_zhvugi.jpg");
+	background-position: center;
+	background-size: cover;
+	min-height: 80vh;
+  }

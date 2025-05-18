@@ -20,7 +20,7 @@ import {
 	FaToggleOn,
 } from "react-icons/fa";
 import swal from "sweetalert";
-import "./ViewScreen.css";
+import "./vendorViewScreen.css";
 
 const VendorViewScreen = ({ history }) => {
 	const [activeTab, setActiveTab] = useState("personal");

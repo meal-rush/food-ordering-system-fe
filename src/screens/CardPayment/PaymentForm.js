@@ -6,6 +6,8 @@ import Alert from "react-bootstrap/Alert";
 import Swal from "sweetalert2";
 import emailjs from "@emailjs/browser";
 import { customerUpdateOrderStatusAction } from "../../actions/orderManagementActions/orderAction";
+import axios from "axios"; // Import axios
+import { API_ENDPOINT } from "../../config";
 
 import "./CardPayment.css";
 import PayServices from "./paymentService";
@@ -70,9 +72,23 @@ export default function PaymentForm() {
 						title: "Payment Successful",
 						text: "Your order is placed now. Payment confirmation email has been sent to the email",
 						footer: '<a href="/buyerProfile">View Your Orders</a>',
-					}).then((result) => {
+					}).then(async (result) => {
 						if (result.isConfirmed) {
+							// Dispatch order status update
 							dispatch(customerUpdateOrderStatusAction(orderId, orderStatus));
+
+							// Send SMS notification
+							try {
+								await axios.post(`${API_ENDPOINT}/api/sms/send`, {
+									to: document.querySelector('input[name="user.phone"]').value,
+									message: `Your order with ID ${orderId} has been successfully placed!`,
+								});
+								console.log("SMS sent successfully");
+							} catch (smsError) {
+								console.error("Error sending SMS:", smsError.message);
+							}
+
+							// Redirect to delivery creation page
 							window.location.href = `/delivery-create/${orderId}`;
 						}
 					});
