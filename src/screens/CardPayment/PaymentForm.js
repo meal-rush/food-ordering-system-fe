@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import emailjs from "@emailjs/browser";
 import { customerUpdateOrderStatusAction } from "../../actions/orderManagementActions/orderAction";
 import axios from "axios"; // Import axios
+import { API_ENDPOINT } from "../../config";
 
 import "./CardPayment.css";
 import PayServices from "./paymentService";
@@ -78,7 +79,7 @@ export default function PaymentForm() {
 
 							// Send SMS notification
 							try {
-								await axios.post("API_ENDPOINT/api/sms/send", {
+								await axios.post(`${API_ENDPOINT}/api/sms/send`, {
 									to: document.querySelector('input[name="user.phone"]').value,
 									message: `Your order with ID ${orderId} has been successfully placed!`,
 								});
